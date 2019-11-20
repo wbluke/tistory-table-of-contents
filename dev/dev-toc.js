@@ -9,12 +9,31 @@ const TOC = {
             </el-card>`
 }
 
+const LEVEL_1 = 1;
+const LEVEL_2 = 2;
+const LEVEL_3 = 3;
+
+const CONSTANTS = (function() {
+
+  const BLANKS_OF_LEVEL_1 = 0;
+  const BLANKS_OF_LEVEL_2 = 4;
+  const BLANKS_OF_LEVEL_3 = 8;
+
+  const blanksByLevel = function() {
+    return new Map([[LEVEL_1, BLANKS_OF_LEVEL_1], [LEVEL_2, BLANKS_OF_LEVEL_2], [LEVEL_3, BLANKS_OF_LEVEL_3]]);
+  }
+
+  return {
+    blanksByLevel: blanksByLevel()
+  }
+})();
+
 new Vue({
   el: '#app',
   data: function() {
     return { 
       visible: false,
-      toc: TOC
+      toc: TOC,
     }
   },
   mounted() {
@@ -29,34 +48,26 @@ new Vue({
       const text = element.innerText;
       let item;
       if (element.matches('h1')) {
-        item = this.getLevel1Template(text);
+        item = this.getTagTemplateByLevel(LEVEL_1, text);
       }
       if (element.matches('h2')) {
-        item = this.getLevel2Template(text);
+        item = this.getTagTemplateByLevel(LEVEL_2, text);
       }
       if (element.matches('h3')) {
-        item = this.getLevel3Template(text);
+        item = this.getTagTemplateByLevel(LEVEL_3, text);
       }
 
       elCard.appendChild(item);
     });
   },
   methods: {
-    getLevel1Template: function(text = '') {
+    getTagTemplateByLevel: function(level = LEVEL_1, text = '') {
       const basicItem = this.getBasicItemTemplate(text);
-      basicItem.classList.add('toc-level1');
-      return basicItem;
-    },
-    getLevel2Template: function(text = '') {
-      const basicItem = this.getBasicItemTemplate(text);
-      basicItem.insertAdjacentHTML('afterbegin', this.generateBlanks(4))
-      basicItem.classList.add('toc-level2');
-      return basicItem;
-    },
-    getLevel3Template: function(text = '') {
-      const basicItem = this.getBasicItemTemplate(text);
-      basicItem.insertAdjacentHTML('afterbegin', this.generateBlanks(8))
-      basicItem.classList.add('toc-level3');
+      const blanks = this.generateBlanks(CONSTANTS.blanksByLevel.get(level)); 
+
+      basicItem.insertAdjacentHTML('afterbegin', blanks)
+      basicItem.classList.add(`toc-level${level}`);
+
       return basicItem;
     },
     getBasicItemTemplate: function(text = '') {
