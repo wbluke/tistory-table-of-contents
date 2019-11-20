@@ -46,11 +46,12 @@
 .toc-level1 {
   font-size: 15px;
   margin-top: 8px;
+  font-weight: bold;
 }
 
 .toc-level2 {
   font-size: 13px;
-  /* margin-bottom: 8px; */
+  margin-top: 5px;
 }
 
 .toc-level3 {
