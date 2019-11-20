@@ -19,16 +19,13 @@ new Vue({
   },
   mounted() {
     const mainContents = document.querySelector('.area_view');
-    const h1Tags = mainContents.querySelectorAll('h1, h2, h3');
-    // const h1Tags = mainContents.querySelectorAll('h1');
-    const h2Tags = mainContents.querySelectorAll('h2');
-    const h3Tags = mainContents.querySelectorAll('h3');
+    const tocTags = mainContents.querySelectorAll('h1, h2, h3');
 
     // TODO : 최상위 태그 판별 작업
 
     // TOC에 태그 삽입
-    const elCard = document.querySelector('#toc-el-card');
-    h1Tags.forEach(element => {
+    const elCard = document.querySelector('#toc-elements');
+    tocTags.forEach(element => {
       const text = element.innerText;
       let item;
       if (element.matches('h1')) {
@@ -52,13 +49,13 @@ new Vue({
     },
     getLevel2Template: function(text = '') {
       const basicItem = this.getBasicItemTemplate(text);
-      basicItem.insertAdjacentHTML('afterbegin', '&nbsp;&nbsp;')
+      basicItem.insertAdjacentHTML('afterbegin', this.generateBlanks(4))
       basicItem.classList.add('toc-level2');
       return basicItem;
     },
     getLevel3Template: function(text = '') {
       const basicItem = this.getBasicItemTemplate(text);
-      basicItem.insertAdjacentHTML('afterbegin', '&nbsp;&nbsp;&nbsp;&nbsp;')
+      basicItem.insertAdjacentHTML('afterbegin', this.generateBlanks(8))
       basicItem.classList.add('toc-level3');
       return basicItem;
     },
@@ -67,6 +64,9 @@ new Vue({
       basicItem.className = 'text item'
       basicItem.innerHTML += text;
       return basicItem;
+    },
+    generateBlanks: function(repeat = 1) {
+      return '&nbsp;'.repeat(repeat);
     }
   }
 })
