@@ -13,6 +13,7 @@
 			elementUiScript.src = 'https://unpkg.com/element-ui/lib/index.js'
 			document.head.appendChild(elementUiScript)
 </script> -->
+
 		<!-- import CSS -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -21,6 +22,7 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- import JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
 
 <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/lib/lightbox/css/lightbox.min.css"><link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/content/font.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"><link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/content/content.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"><!--[if lt IE 9]><script src="https://t1.daumcdn.net/tistory_admin/lib/jquery/jquery-1.12.4.min.js"></script><![endif]--><!--[if gte IE 9]>
 <!--><script src="https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script src="https://t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script><!--<![endif]-->
@@ -307,6 +309,7 @@ lightbox.options.albumLabel = "%1 / %2";
         			        </div>
 										</div>
 										<div class="items">
+											<div id="toc-el-card"></div>
         			      <div v-for="o in 15" :key="o" class="text item">
 											<a href="#">
 												{{'List item ' + o }}
@@ -342,6 +345,7 @@ lightbox.options.albumLabel = "%1 / %2";
 <p>&nbsp;</p>
 <p>지금까지 해왔던 작업은 비즈니스 로직에 반복적으로 등장하는 트랜잭션 코드를 투명하게 분리해내는 것이었다. 투명하다는 것은 투명한 유리를 사이에 둔 것처럼, 부가기능을 적용한 후에도 기존 설계와 코드에는 영향을 주지 않고 메소드가 호출되는 과정에 다이내믹하게 참여해서 부가적인 기능을 제공해주도록 만들었다는 것이다.</p>
 <hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h1>테스트 h1 태그1</h1>
 <h2>자동 프록시 생성</h2>
 <h3>자동 프록시 생성 빈 후처리기</h3>
 <p>투명한 부가기능을 적용하는 과정에서 발견됐던 거의 대부분의 문제는 제거했다. 타깃 코드는 깔끔하고, 부가기능은 한 번만 만들어 모든 타깃과 메소드에 재사용이 가능하고, 타깃의 적용 메소드를 선정하는 방식도 독립적으로 작성할 수 있도록 분리되어 있다.</p>
@@ -354,6 +358,7 @@ lightbox.options.albumLabel = "%1 / %2";
 <p>&nbsp;</p>
 <p>이를 잘 이용하면 스프링이 생성하는 빈 오브젝트의 일부를 프록시로 포장하고, 프록시를 빈으로 대신 등록할 수도 있다. 바로 이것이 <code>자동 프록시 생성 빈 후처리기</code>다. DefaultAdvisorAutoProxyCreator는 빈으로 등록된 모든 어드바이저 내의 포인트컷을 이용해 전달받은 빈이 프록시 적용 대상인지 확인한다. 프록시 적용 대상이면 그때는 내장된 프록시 생성기에게 현재 빈에 대한 프록시를 만들게 하고, 만들어진 프록시에 어드바이저를 연결해준다. 컨테이너는 최종적으로 빈 후처리기가 돌려준 오브젝트를 빈으로 등록하고 사용한다.</p>
 <hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h1>테스트 h1 태그2</h1>
 <h2>포인트컷</h2>
 <h3>확장된 포인트컷</h3>
 <p>한 가지 이상한 점은 지금까지 포인트컷은 부가기능을 적용할 메소드를 판별하는 역할을 수행한다고 했는데, 위에서는 어떤 빈에 프록시를 적용할지를 선택한다고 했던 점이다. 사실 포인트컷은 클래스 필터와 메소드 매처 두 가지를 돌려주는 메소드를 갖고 있다.</p>
@@ -384,6 +389,7 @@ execution(* *(..)) <span class="hljs-comment">// 모든 메소드 허용</span><
 <pre class="css"><code class="hljs">@<span class="hljs-keyword">annotation</span>(<span class="hljs-keyword">org</span>.<span class="hljs-keyword">springframework</span>.<span class="hljs-keyword">transaction</span>.<span class="hljs-keyword">annotation</span>.<span class="hljs-keyword">Transactional</span>)</code></pre>
 <p>표현식을 사용할 때 주의할 점은 <code>클래스 이름에 적용되는 패턴이 클래스 이름 패턴이 아니라 타입 패턴이라는 것</code>이다. 타입 패턴이 적용된다는 것은 어떤 클래스가 상속 받고 있는 부모 클래스 타입, 혹은 구현한 인터페이스 타입까지도 적용될 수 있다는 것을 의미한다. 쉽게 말해 자식 클래스 혹은 구현 클래스가 부모 타입, 인터페이스 타입을 표현한 표현식에 해당된다는 뜻이다.</p>
 <hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h1>테스트 h1 태그3</h1>
 <h2>AOP란 무엇인가?</h2>
 <h3>트랜잭션 적용 과정</h3>
 <p>지금까지 UserService에 트랜잭션을 적용해온 과정을 정리해보자.</p>
@@ -444,6 +450,7 @@ execution(* *(..)) <span class="hljs-comment">// 모든 메소드 허용</span><
 <p><span style="color: #1b711d;"><b>※&nbsp;애스펙트</b></span></p>
 <p>OOP의 클래스와 마찬가지로 애스펙트는 AOP의 기본 모듈이다. 한 개 또는 그 이상의 포인트컷과 어드바이스의 조합으로 만들어지며 보통 싱글톤 형태의 오브젝트로 존재한다. 따라서 클래스와 같은 모듈 정의와 오브젝트와 같은 인스턴스의 구분이 특별히 없다. 두 가지 모두 애스펙트라고 불린다.</p>
 <hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h1>테스트 h1 태그4</h1>
 <h2>트랜잭션 속성</h2>
 <h3>트랜잭션 전파</h3>
 <p>스프링의 트랜잭션 추상화를 설명하면서 그냥 넘어간 부분이 있다. 트랜잭션 매니저에서 트랜잭션을 가져올 때 사용한 DefaultTransactionDefinition 오브젝트다.</p>
