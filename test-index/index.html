@@ -1,0 +1,1000 @@
+<html lang="ko"><head>
+<!-- <script>
+			const elementUiCss = document.createElement('link')
+			elementUiCss.rel = 'stylesheet'
+			elementUiCss.href = 'https://unpkg.com/element-ui/lib/theme-chalk/index.css'
+			document.head.appendChild(elementUiCss)
+
+			const vueScript = document.createElement('script')
+			vueScript.src = 'https://unpkg.com/vue/dist/vue.js'
+			document.head.appendChild(vueScript)
+			
+			const elementUiScript = document.createElement('script')
+			elementUiScript.src = 'https://unpkg.com/element-ui/lib/index.js'
+			document.head.appendChild(elementUiScript)
+</script> -->
+		<!-- import CSS -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<link rel="stylesheet" href="../toc.css">
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/lib/lightbox/css/lightbox.min.css"><link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/content/font.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"><link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/content/content.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"><!--[if lt IE 9]><script src="https://t1.daumcdn.net/tistory_admin/lib/jquery/jquery-1.12.4.min.js"></script><![endif]--><!--[if gte IE 9]>
+<!--><script src="https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script src="https://t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script><!--<![endif]-->
+<script src="https://t1.daumcdn.net/tistory_admin/lib/lightbox/js/lightbox-plus-jquery.min.js"></script>
+<script>
+lightbox.options.fadeDuration = 200;
+lightbox.options.resizeDuration = 200;
+lightbox.options.wrapAround = false;
+lightbox.options.albumLabel = "%1 / %2";
+</script>
+<script>var tjQuery = jQuery.noConflict(true);</script><style type="text/css">.tt_article_useless_p_margin p {padding-top:0 !important;padding-bottom:0 !important;margin-top:0 !important;margin-bottom:0 !important;}</style><meta name="referrer" content="always"><link rel="icon" href="https://tistory1.daumcdn.net/tistory/3243776/33bf626382304a188be03519e2a5d528"><link rel="apple-touch-icon" href="//img1.daumcdn.net/thumb/C180x180/?fname=https%3A%2F%2Ftistory3.daumcdn.net%2Ftistory%2F3243776%2Fattach%2F5b586e2862584b7cbe0756f0ce9788b9">
+<link rel="apple-touch-icon" sizes="76x76" href="//img1.daumcdn.net/thumb/C76x76/?fname=https%3A%2F%2Ftistory3.daumcdn.net%2Ftistory%2F3243776%2Fattach%2F5b586e2862584b7cbe0756f0ce9788b9">
+<link rel="apple-touch-icon" sizes="120x120" href="//img1.daumcdn.net/thumb/C120x120/?fname=https%3A%2F%2Ftistory3.daumcdn.net%2Ftistory%2F3243776%2Fattach%2F5b586e2862584b7cbe0756f0ce9788b9">
+<link rel="apple-touch-icon" sizes="152x152" href="//img1.daumcdn.net/thumb/C152x152/?fname=https%3A%2F%2Ftistory3.daumcdn.net%2Ftistory%2F3243776%2Fattach%2F5b586e2862584b7cbe0756f0ce9788b9"><meta name="description" content="이전 글 : [토비의 스프링] 6. AOP (1) 지금까지 해왔던 작업은 비즈니스 로직에 반복적으로 등장하는 트랜잭션 코드를 투명하게 분리해내는 것이었다. 투명하다는 것은 투명한 유리를 사이에 둔 것처럼, 부가기능..">
+
+<!-- BEGIN OPENGRAPH -->
+<link rel="canonical" href="https://www.wbluke.com/20"><meta property="og:type" content="article"><meta property="og:url" content="https://www.wbluke.com/20"><meta property="og:site_name" content="함께 자라기"><meta property="og:title" content="[토비의 스프링] 6. AOP (2)"><meta name="by" content="우비닉"><meta property="og:description" content="이전 글 : [토비의 스프링] 6. AOP (1) 지금까지 해왔던 작업은 비즈니스 로직에 반복적으로 등장하는 트랜잭션 코드를 투명하게 분리해내는 것이었다. 투명하다는 것은 투명한 유리를 사이에 둔 것처럼, 부가기능.."><meta property="og:image" content="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbFaHKL%2Fbtqzs6tP9BM%2F4KqhfoX8QE7b4KSwNSYha1%2Fimg.png">
+<!-- END OPENGRAPH -->
+
+
+
+<!-- BEGIN TWITTERCARD -->
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@TISTORY"><meta name="twitter:title" content="[토비의 스프링] 6. AOP (2)"><meta name="twitter:description" content="이전 글 : [토비의 스프링] 6. AOP (1) 지금까지 해왔던 작업은 비즈니스 로직에 반복적으로 등장하는 트랜잭션 코드를 투명하게 분리해내는 것이었다. 투명하다는 것은 투명한 유리를 사이에 둔 것처럼, 부가기능.."><meta property="twitter:image" content="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbFaHKL%2Fbtqzs6tP9BM%2F4KqhfoX8QE7b4KSwNSYha1%2Fimg.png">
+<!-- END TWITTERCARD -->
+
+
+
+<!-- BEGIN DAUMAPP -->
+<meta property="dg:plink" content="https://www.wbluke.com/20"><meta name="plink" content="https://www.wbluke.com/20"><meta name="title" content="[토비의 스프링] 6. AOP (2)"><meta name="article:media_name" content="함께 자라기"><meta property="article:mobile_url" content="https://www.wbluke.com/m/20"><meta property="article:pc_url" content="https://www.wbluke.com/20"><meta property="article:mobile_view_url" content="https://wbluke.tistory.com/m/20"><meta property="article:pc_view_url" content="https://wbluke.tistory.com/20"><meta property="article:talk_channel_view_url" content="https://www.wbluke.com/m/20"><meta property="article:pc_service_home" content="https://www.tistory.com"><meta property="article:mobile_service_home" content="https://www.tistory.com/m"><meta property="article:txid" content="3243776_20"><meta property="article:published_time" content="2019-11-02T17:29:01+09:00"><meta property="og:regDate" content="20191102172901"><meta property="article:modified_time" content="2019-11-06T17:03:48+09:00">
+<!-- END DAUMAPP -->
+
+
+
+<!-- BEGIN STRUCTURED_DATA -->
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":{"@id":"https:\/\/www.wbluke.com\/20"},"url":"https:\/\/www.wbluke.com\/20","headline":"[\ud1a0\ube44\uc758 \uc2a4\ud504\ub9c1] 6. AOP (2)","description":"\uc774\uc804 \uae00 : [\ud1a0\ube44\uc758 \uc2a4\ud504\ub9c1] 6. AOP (1) \uc9c0\uae08\uae4c\uc9c0 \ud574\uc654\ub358 \uc791\uc5c5\uc740 \ube44\uc988\ub2c8\uc2a4 \ub85c\uc9c1\uc5d0 \ubc18\ubcf5\uc801\uc73c\ub85c \ub4f1\uc7a5\ud558\ub294 \ud2b8\ub79c\uc7ad\uc158 \ucf54\ub4dc\ub97c \ud22c\uba85\ud558\uac8c \ubd84\ub9ac\ud574\ub0b4\ub294 \uac83\uc774\uc5c8\ub2e4. \ud22c\uba85\ud558\ub2e4\ub294 \uac83\uc740 \ud22c\uba85\ud55c \uc720\ub9ac\ub97c \uc0ac\uc774\uc5d0 \ub454 \uac83\ucc98\ub7fc, \ubd80\uac00\uae30\ub2a5..","author":{"@type":"Person","name":"\uc6b0\ube44\ub2c9"},"image":{"@type":"ImageObject","url":"https:\/\/img1.daumcdn.net\/thumb\/R800x0\/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbFaHKL%2Fbtqzs6tP9BM%2F4KqhfoX8QE7b4KSwNSYha1%2Fimg.png","width":"800px","height":"800px"},"datePublished":"20191102T17:29:01+09:00","dateModified":"20191106T17:03:48+09:00","publisher":{"@type":"Organization","name":"TISTORY","logo":{"@type":"ImageObject","url":"https:\/\/t1.daumcdn.net\/tistory_admin\/static\/images\/openGraph\/opengraph.png","width":"800px","height":"800px"}}}</script>
+<!-- END STRUCTURED_DATA -->
+
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+	<title>[토비의 스프링] 6. AOP (2)</title>
+	<link rel="alternate" type="application/rss+xml" title="함께 자라기" href="https://www.wbluke.com/rss">
+
+	<link rel="stylesheet" href="https://tistory1.daumcdn.net/tistory/3243776/skin/style.css?_T_=1572232309">
+	<link rel="stylesheet" href="https://tistory1.daumcdn.net/tistory/3243776/skin/images/font.css">
+
+	<!--[if lt IE 9]>
+	<script src="//t1.daumcdn.net/tistory_admin/lib/jquery/jquery-1.12.4.min.js"></script>
+	<![endif]-->
+	<!--[if gte IE 9]><!-->
+	<script src="//t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script>
+	<!--<![endif]-->
+	
+	<script data-ad-client="ca-pub-9348951692816238" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" data-checked-head="true"></script>
+	
+	<meta name="naver-site-verification" content="fef236fe40722fe4ae610e4521714a88ae7d39d5">
+	<meta name="google-site-verification" content="-k7CF5q1PMc-y_PpUnRYVme3oxKA045_s8cQ0t3r4QM">
+
+<link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/plugins/TistoryProfileLayer/style.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04">
+<script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/plugins/TistoryProfileLayer/profile.js?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"></script>
+	<style type="text/css">
+		.another_category { border: 1px solid #E5E5E5; padding: 10px 10px 5px; margin:10px 0; clear: both; }
+		.another_category h4 { font-size: 12px !important; margin: 0 !important; border-bottom: 1px solid #E5E5E5 !important; padding: 2px 0 6px !important; }
+		.another_category h4 a { font-weight: bold !important; }
+		.another_category table { table-layout: fixed; border-collapse: collapse; width: 100% !important; margin-top: 10px !important; }
+		* html .another_category table { width: auto !important; }
+		*:first-child+html .another_category table { width: auto !important; }
+		.another_category th, .another_category td { padding: 0 0 4px !important; }
+		.another_category th { text-align: left; font-size: 12px !important; font-weight: normal;  word-break: break-all; overflow: hidden; line-height: 1.5; }
+		.another_category td { text-align: right; width: 80px; font-size: 11px; }
+		.another_category th a { font-weight: normal; text-decoration: none; border: none !important; }
+		.another_category th a.current{ font-weight: bold; text-decoration: none !important; border-bottom: 1px solid !important; }
+		.another_category th span { font-weight: normal; text-decoration: none; font: 10px Tahoma, Sans-serif; border: none !important; }
+
+		.another_category_color_gray, .another_category_color_gray h4 { border-color: #E5E5E5 !important; }
+		.another_category_color_gray * { color: #909090 !important; }
+		.another_category_color_gray th a.current{border-color:#909090 !important;}
+		.another_category_color_gray h4, .another_category_color_gray h4 a { color: #737373 !important; }
+
+
+		.another_category_color_red, .another_category_color_red h4 { border-color: #F6D4D3 !important;  }
+		.another_category_color_red * { color: #E86869 !important; }
+		.another_category_color_red th a.current{border-color:#E86869 !important;}
+		.another_category_color_red h4, .another_category_color_red h4 a { color: #ED0908 !important; }
+
+
+		.another_category_color_green, .another_category_color_green h4 { border-color: #CCE7C8 !important; }
+		.another_category_color_green * { color: #64C05B !important; }
+		.another_category_color_green th a.current{border-color:#64C05B !important;}
+		.another_category_color_green h4, .another_category_color_green h4 a { color: #3EA731 !important; }
+
+
+		.another_category_color_blue, .another_category_color_blue h4 { border-color: #C8DAF2 !important; }
+		.another_category_color_blue * { color: #477FD6 !important; }
+		.another_category_color_blue th a.current{border-color:#477FD6 !important;}
+		.another_category_color_blue h4, .another_category_color_blue h4 a { color: #1960CA !important; }
+
+
+		.another_category_color_violet, .another_category_color_violet h4 { border-color: #E1CEEC !important;  }
+		.another_category_color_violet * { color:#9D64C5 !important; }
+		.another_category_color_violet th a.current{border-color:#9D64C5 !important;}
+		.another_category_color_violet h4, .another_category_color_violet h4 a { color: #7E2CB5 !important; }
+	</style>
+<script type="text/javascript">
+        window.TistoryBlog = {
+            basePath: "",
+            url: "https://www.wbluke.com",
+            tistoryUrl: "https://wbluke.tistory.com",
+			manageUrl: 'https://wbluke.tistory.com/manage',
+            token: 'ueBRsq8jWMxoyks87piTeg=='
+        };
+        var servicePath = "";
+        var blogURL = "";
+    </script>
+
+	<script> (function() { window.orgjQuery = window.jQuery; window.jQuery = tjQuery })()</script>
+    <script src="https://t1.daumcdn.net/section/uoclike/news/uoclike.min.js"></script>
+	<script> (function() { window.jQuery = window.orgjQuery; delete window.orgjQuery })()</script>
+    <script>
+		(function($) {
+			$.fn.extend({
+				size: function () {
+					return this.length
+				}
+			});
+			$.fn.UOCLike.defaults.updateServiceCategory = true;
+					})(tjQuery)
+    </script>
+        <script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/script/_/base.js?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"></script>
+        <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/dialog.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04">
+            <link rel="stylesheet" type="text/css" href="//t1.daumcdn.net/tistory_admin/www/style/top/font.css">
+    <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/postBtn.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04">
+        <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/component/tistory.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04">
+        <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script><style type="text/css">#DragSchLayer{display:block;position:absolute;z-index:1000;width:61px;height:31px;margin:-30px 0px 0px -5px;background:url(//search1.daumcdn.net/search/statics/common/pi/btn_drag_rect.png);cursor:pointer}             @media             only screen and (-webkit-min-device-pixel-ratio: 1.5),             only screen and (min-device-pixel-ratio: 1.5),             only screen and (min-resolution: 1.5dppx) {             #DragSchLayer{background-image:url(//search1.daumcdn.net/search/statics/common/pi/r2/btn_drag_rect.png);background-size:61px 31px}}            </style><script type="text/javascript" async="" src="https://m2.daumcdn.net/tiara/js/td.min.js"></script><link rel="preload" href="https://adservice.google.co.kr/adsid/integrator.js?domain=www.wbluke.com" as="script"><script type="text/javascript" src="https://adservice.google.co.kr/adsid/integrator.js?domain=www.wbluke.com"></script><link rel="preload" href="https://adservice.google.com/adsid/integrator.js?domain=www.wbluke.com" as="script"><script type="text/javascript" src="https://adservice.google.com/adsid/integrator.js?domain=www.wbluke.com"></script><link rel="preload" href="https://pagead2.googlesyndication.com/pagead/js/r20191106/r20190131/show_ads_impl.js" as="script"><link rel="stylesheet" type="text/css" href="//m1.daumcdn.net/svc/original/U03/cssjs/uoclike/common/uoclike.min-20150408-2.css"></head>
+
+<body id="tt-body-page" cz-shortcut-listen="true">
+<script type="text/javascript">
+	(function() {
+		if (!window.T) {
+			window.T = {}
+		}
+		window.T.config = {"TOP_SSL_URL":"https:\/\/www.tistory.com","PREVIEW":false,"ROLE":"owner","PREV_PAGE":"","NEXT_PAGE":"\/17","BLOG":{"isDormancy":false,"title":"\ud568\uaed8 \uc790\ub77c\uae30"},"NEED_COMMENT_LOGIN":false,"COMMENT_LOGIN_CONFIRM_MESSAGE":"","LOGIN_URL":"https:\/\/www.tistory.com\/auth\/login\/?redirectUrl=https%3A%2F%2Fwww.wbluke.com%2F20","DEFAULT_URL":"https:\/\/www.wbluke.com","USER":{"name":"\uc6b0\ube44\ub2c9","homepage":"https:\/\/www.wbluke.com"}};
+		window.appInfo = {"domain":"tistory.com","topUrl":"https:\/\/www.tistory.com","loginUrl":"https:\/\/www.tistory.com\/auth\/login","logoutUrl":"https:\/\/www.tistory.com\/auth\/logout"};
+
+        window.initData = {};
+                    initData.user = {"id":"3983921","loginId":"pwb0127@gmail.com","name":"\uc6b0\ube44\ub2c9"};
+        
+	})();
+</script>
+
+	<script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/script/owner.js?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"></script>
+<script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/script/blog/common.js?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"></script>
+<div style="margin:0; padding:0; border:none; background:none; float:none; clear:none; z-index:0"></div>
+	<div id="dkIndex">
+		<a href="#dkBody">본문 바로가기</a>
+		<a href="#dkGnb">메뉴 바로가기</a>
+	</div>
+
+	<div id="dkWrap" class="wrap_skin ">
+		<div id="dkHead" role="banner" class="area_head ">
+			<h1 class="screen_out">함께 자라기</h1>
+			<div class="area_profile ">
+				<a class="link_profile" href="/"><img src="https://tistory2.daumcdn.net/tistory/3243776/attach/5b586e2862584b7cbe0756f0ce9788b9" width="50" height="50" class="img_profile" alt="프로필사진"></a>
+				<div class="info_profile">
+					<button type="button" class="btn_name">우비닉
+						<span class="ico_skin ico_name"></span>
+					</button>
+					<ul class="list_name">
+						<li><a href="https://wbluke.tistory.com/manage/entry/post" class="link_name">글쓰기</a></li>
+						<li><a href="https://wbluke.tistory.com/manage" class="link_name">관리</a></li>
+						<li class="box_division"><a href="/tag" class="link_name">태그</a></li>
+						<li><a href="/guestbook" class="link_name">방명록</a></li>
+						<li><a href="https://www.wbluke.com/rss" class="link_name">RSS</a></li>
+					</ul>
+					<p class="txt_condition">함께 자라기</p>
+				</div>
+			</div>
+
+			<button type="button" class="btn_menu">
+				<span class="ico_skin ico_menu">카테고리 메뉴열기</span>
+			</button>
+		</div>
+
+		<div class="dimmed_layer"></div>
+
+		<button type="button" class="btn_close">
+			<span class="ico_skin ico_close">닫기</span>
+		</button>
+
+		<div class="area_menu">
+			
+				<div class="area_search">
+					<button type="button" class="btn_search">
+						<span class="ico_skin ico_search">검색하기</span>
+					</button>
+					<form action="#" method="get" class="frm_search" onsubmit="try{window.location.href='/search/'+looseURIEncode(document.getElementsByName('search')[0].value);document.getElementsByName('search')[0].value='';return false;}catch(e){}">
+						<fieldset>
+							<legend class="screen_out">검색하기 폼</legend>
+							<label for="tfSearch" class="ico_skin lab_search">검색하기</label>
+							<input type="text" name="search" value="" class="tf_search">
+						</fieldset>
+					</form>
+				</div>
+			
+
+			<div role="navigation" class="area_navi">
+				<button type="button" class="btn_cate">CATEGORY <span class="ico_skin ico_cate"></span></button>
+
+				<div class="list_cate">
+					<ul class="tt_category">
+	<li class="">
+		<a class="link_tit" href="/category">
+			전체보기							<span class="c_cnt">(14)</span>
+			
+					</a>
+
+				<ul class="category_list">
+							<li class="">
+					<a class="link_item" href="/category/%EB%B8%94%EB%A1%9C%EA%B7%B8">
+						블로그													<span class="c_cnt">(2)</span>
+						
+											</a>
+
+					
+				</li>
+							<li class="">
+					<a class="link_item" href="/category/JPA">
+						JPA													<span class="c_cnt">(2)</span>
+						
+											</a>
+
+					
+				</li>
+							<li class="">
+					<a class="link_item" href="/category/Spring">
+						Spring													<span class="c_cnt">(8)</span>
+						
+											</a>
+
+										<ul class="sub_category_list">
+													<li class="">
+								<a class="link_sub_item" href="/category/Spring/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81%203.1">
+									토비의 스프링 3.1
+																			<span class="c_cnt">(7)</span>
+									
+																	</a>
+							</li>
+											</ul>
+					
+				</li>
+							<li class="">
+					<a class="link_item" href="/category/%EC%9A%B0%EC%95%84%ED%95%9C%ED%85%8C%ED%81%AC%EC%BD%94%EC%8A%A4">
+						우아한테크코스													<span class="c_cnt">(2)</span>
+						
+											</a>
+
+					
+				</li>
+					</ul>
+			</li>
+</ul>
+
+					<ul class="menu_profile">
+						<li><a href="/guestbook">방명록</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<hr class="hide">
+
+		
+
+		<div id="dkContent" class="cont_skin" role="main">
+			<div id="cMain">
+
+                <div id="app" class="toc-app">
+									<!-- <component v-bind:is="toc"></component> -->
+  								<el-card shadow="hover" class="box-card">
+        			      <div slot="header" class="clearfix">
+        			        <div>
+												<i class="material-icons icon-align">outlined_flag</i>
+												<b>Table Of Contents</b>
+        			        </div>
+										</div>
+										<div class="items">
+        			      <div v-for="o in 15" :key="o" class="text item">
+											<a href="#">
+												{{'List item ' + o }}
+											</a>
+										</div>
+										</div>
+        			    </el-card>
+                </div>
+				
+					<div id="mArticle" class="article_skin">
+
+						
+
+						
+							<div class="skin_view">
+								<h2 id="dkBody" class="screen_out">티스토리 뷰</h2>
+								<div class="area_title">
+									<strong class="tit_category"><a href="/category/Spring/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81%203.1">Spring/토비의 스프링 3.1</a></strong>
+									<h3 class="tit_post"><a href="/20">[토비의 스프링] 6. AOP (2)</a></h3>
+									<span class="txt_detail my_post">우비닉
+										<span class="txt_bar"></span>2019.11.02 17:29
+										
+											<span class="my_edit">
+												<span class="txt_bar"></span><a href="https://wbluke.tistory.com/manage/post/20?returnURL=https%3A%2F%2Fwww.wbluke.com%2F20" class="link_detail">수정</a>
+												<span class="txt_bar"></span><a href="#" onclick="changeVisibility(20, 0); return false;" class="link_detail">공개</a>
+												<span class="txt_bar"></span><a href="#" onclick="deleteEntry(20); return false;" class="link_detail">삭제</a>
+											</span>
+										
+									</span>
+								</div>
+								<div class="area_view">
+									<div class="tt_article_useless_p_margin"><p>이전 글 : <a href="https://www.wbluke.com/17">[토비의 스프링] 6. AOP (1)</a></p>
+<p>&nbsp;</p>
+<p>지금까지 해왔던 작업은 비즈니스 로직에 반복적으로 등장하는 트랜잭션 코드를 투명하게 분리해내는 것이었다. 투명하다는 것은 투명한 유리를 사이에 둔 것처럼, 부가기능을 적용한 후에도 기존 설계와 코드에는 영향을 주지 않고 메소드가 호출되는 과정에 다이내믹하게 참여해서 부가적인 기능을 제공해주도록 만들었다는 것이다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h2>자동 프록시 생성</h2>
+<h3>자동 프록시 생성 빈 후처리기</h3>
+<p>투명한 부가기능을 적용하는 과정에서 발견됐던 거의 대부분의 문제는 제거했다. 타깃 코드는 깔끔하고, 부가기능은 한 번만 만들어 모든 타깃과 메소드에 재사용이 가능하고, 타깃의 적용 메소드를 선정하는 방식도 독립적으로 작성할 수 있도록 분리되어 있다.</p>
+<p>&nbsp;</p>
+<p>하지만 아직 한 가지 해결할 과제가 남아 있다. 프록시 팩토리 빈 방식의 접근 방법의 한계라고 생각했던 두 가지 문제가 있었다. 그중에서 부가기능이 타깃 오브젝트마다 새로 만들어지는 문제는 스프링 ProxyFactoryBean의 어드바이스를 통해 해결됐다. 남은 것은 부가기능의 적용이 필요한 타깃 오브젝트마다 거의 비슷한 내용의 ProxyFactoryBean 빈 설정정보를 추가해주는 부분이다. 새로운 타깃이 등장할 때마다 비슷한 설정을 매번 복사해주어야 한다. 이런 류의 중복은 어떻게 할까?</p>
+<p>&nbsp;</p>
+<p>스프링은 OCP의 가장 중요한 요소인 유연한 확장이라는 개념을 스프링 컨테이너 자신에게도 다양한 방법으로 적용하고 있다. 스프링은 컨테이너로서 제공하는 기능 중에서 변하지 않는 핵심적인 부분 외에는 대부분 확장할 수 있도록 확장 포인트를 제공하고 있다.</p>
+<p>&nbsp;</p>
+<p>그중에서 관심을 가질 만한 확장 포인트는 바로 BeanPostProcessor 인터페이스를 구현해서 만드는 <code>빈 후처리기</code>다. 빈 후처리기는 이름 그대로 스프링 빈 오브젝트로 만들어지고 난 후에, 빈 오브젝트를 다시 가공할 수 있게 해준다. 그중 <code>DefaultAdvisorAutoProxyCreator</code>는 어드바이저를 이용한 <code>자동 프록시 생성기</code>다. 스프링은 빈 후처리기가 빈으로 등록되어 있으면 빈 오브젝트가 생성될 때마다 빈 후처리기에 보내서 후처리 작업을 요청한다.</p>
+<p>&nbsp;</p>
+<p>이를 잘 이용하면 스프링이 생성하는 빈 오브젝트의 일부를 프록시로 포장하고, 프록시를 빈으로 대신 등록할 수도 있다. 바로 이것이 <code>자동 프록시 생성 빈 후처리기</code>다. DefaultAdvisorAutoProxyCreator는 빈으로 등록된 모든 어드바이저 내의 포인트컷을 이용해 전달받은 빈이 프록시 적용 대상인지 확인한다. 프록시 적용 대상이면 그때는 내장된 프록시 생성기에게 현재 빈에 대한 프록시를 만들게 하고, 만들어진 프록시에 어드바이저를 연결해준다. 컨테이너는 최종적으로 빈 후처리기가 돌려준 오브젝트를 빈으로 등록하고 사용한다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h2>포인트컷</h2>
+<h3>확장된 포인트컷</h3>
+<p>한 가지 이상한 점은 지금까지 포인트컷은 부가기능을 적용할 메소드를 판별하는 역할을 수행한다고 했는데, 위에서는 어떤 빈에 프록시를 적용할지를 선택한다고 했던 점이다. 사실 포인트컷은 클래스 필터와 메소드 매처 두 가지를 돌려주는 메소드를 갖고 있다.</p>
+<pre class="cs"><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">Pointcut</span> {
+    <span class="hljs-function">ClassFilter <span class="hljs-title">getClassFilter</span>(<span class="hljs-params"></span>)</span>; <span class="hljs-comment">// 프록시를 적용할 클래스인지 확인해준다.</span>
+    <span class="hljs-function">MethodMatcher <span class="hljs-title">getMethodMatcher</span>(<span class="hljs-params"></span>)</span>; <span class="hljs-comment">// 어드바이스를 적용할 메소드인지 확인해준다.</span>
+}</code></pre>
+<p>지금까지는 포인트컷의 메소드 매처만을 사용해 메소드를 선별하는 작업만 해왔던 것이었다. 선정 기능을 모두 사용한다면 먼저 프록시를 적용할 클래스인지 판단하고 나서, 적용 대상 클래스일 경우 어드바이스를 적용할 메소드인지 확인하는 식으로 동작한다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>포인트컷 표현식</h3>
+<p>좀 더 편리한 포인트컷 작성 방법을 알아보자.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※ 포인트컷 표현식</b></span></p>
+<p>포인트컷 표현식은 일종의 표현식 언어를 사용해서 포인트컷을 작성할 수 있도록 하는 방법이다. 포인트컷 표현식을 지원하는 포인트컷을 사용하려면 AspectJExpressionPointcut 클래스를 사용하면 된다.</p>
+<p>&nbsp;</p>
+<p>앞서 만들었던 포인트컷은 클래스와 메소드의 이름의 패턴을 독립적으로 비교하도록 만들어져 있다. 하지만 AspectJExpressionPointcut은 클래스와 메소드의 선정 알고리즘을 포인트컷 표현식을 이용해 한 번에 지정할 수 있게 해준다. 사실 스프링이 사용하는 포인트컷 표현식은 AspectJ라는 유명한 프레임워크에서 제공하는 것을 가져와 일부 문법을 확장해서 사용하는 것이다. 그래서 이를 <code>AspectJ 포인트컷 표현식</code>이라고도 한다.</p>
+<p>&nbsp;</p>
+<p>AspectJ 포인트컷 표현식은 <code>포인트컷 지시자</code>를 이용해 작성한다. 포인트컷 지시자 중에서 가장 대표적으로 사용되는 것은 <code>execution()</code>이다. 문법은 다음과 같다.</p>
+<pre class="accesslog"><code class="hljs java">execution([접근제한자 패턴] 타입패턴 [타입패턴.]이름패턴 (타입패턴 | <span class="hljs-string">".."</span>, ...) [<span class="hljs-keyword">throws</span> 예외 패턴])</code></pre>
+<p>문법만 보면 복잡해 보이지만, 사실 메소드의 풀 시그니처를 문자열로 비교한다고 생각하면 쉽다. 다음과 같이 말이다.</p>
+<pre class="stylus"><code class="hljs css"><span class="hljs-selector-tag">public</span> <span class="hljs-selector-tag">int</span> <span class="hljs-selector-tag">springbook</span><span class="hljs-selector-class">.learningtest</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.pointcut</span><span class="hljs-selector-class">.Target</span><span class="hljs-selector-class">.minus</span>(<span class="hljs-selector-tag">int</span>,<span class="hljs-selector-tag">int</span>) <span class="hljs-selector-tag">throws</span> <span class="hljs-selector-tag">java</span><span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.RuntimeException</span></code></pre>
+<p>대괄호로 표현한 부분인 접근제한자, 이름패턴에 붙는 타입패턴, 예외 패턴은 생략 가능하고 리턴 타입의 타입패턴, 이름패턴, 파라미터 타입은 필수항목이다. 모든 항목에 대해 적용하고 싶으면 <code>*</code>을 사용한다. 옵션 항목을 생략하면 다음과 같이 간단하게도 사용할 수 있다.</p>
+<pre class="stylus"><code class="hljs cpp">execution(<span class="hljs-keyword">int</span> minus(<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>)) <span class="hljs-comment">// int 타입의 리턴 값, minus라는 메소드 이름, 두 개의 int 파라미터를 가진 모든 메소드를 선정하는 포인트컷 표현식</span>
+execution(* minus(<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>)) <span class="hljs-comment">// 리턴 타입은 상관없이</span>
+execution(* minus(..)) <span class="hljs-comment">// 리턴 타입과 파라미터의 종류, 개수에 상관없이</span>
+execution(* *(..)) <span class="hljs-comment">// 모든 메소드 허용</span></code></pre>
+<p>AspectJ 포인트컷 표현식은 execution() 뿐만 아니라 여러 가지 표현식 스타일을 갖고 있다. 예를 들어 빈의 이름으로 비교하는 bean()도 있고, 다음과 같이 사용하면 @Transactional이라는 애노테이션이 적용된 부분을 가지고 올 수도 있다.</p>
+<pre class="css"><code class="hljs">@<span class="hljs-keyword">annotation</span>(<span class="hljs-keyword">org</span>.<span class="hljs-keyword">springframework</span>.<span class="hljs-keyword">transaction</span>.<span class="hljs-keyword">annotation</span>.<span class="hljs-keyword">Transactional</span>)</code></pre>
+<p>표현식을 사용할 때 주의할 점은 <code>클래스 이름에 적용되는 패턴이 클래스 이름 패턴이 아니라 타입 패턴이라는 것</code>이다. 타입 패턴이 적용된다는 것은 어떤 클래스가 상속 받고 있는 부모 클래스 타입, 혹은 구현한 인터페이스 타입까지도 적용될 수 있다는 것을 의미한다. 쉽게 말해 자식 클래스 혹은 구현 클래스가 부모 타입, 인터페이스 타입을 표현한 표현식에 해당된다는 뜻이다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h2>AOP란 무엇인가?</h2>
+<h3>트랜잭션 적용 과정</h3>
+<p>지금까지 UserService에 트랜잭션을 적용해온 과정을 정리해보자.</p>
+<p>&nbsp;</p>
+<p>트랜잭션 경계설정 코드를 비즈니스 로직을 담은 코드에 넣으면서 맞닥뜨린 첫 번째 문제는 <b>특정 트랜잭션 기술에 종속되는 코드가 돼버린다</b>는 것이었다. 그래서 트랜잭션 적용이라는 추상적인 작업 내용은 유지한 채로 구체적인 구현 방법을 자유롭게 바꿀 수 있도록 <code>서비스 추상화 기법을 적용</code>했다.</p>
+<p>&nbsp;</p>
+<p>추상화를 통해 트랜잭션을 어떻게 다룰 것인가는 코드에서 제거했지만, <b>여전히 비즈니스 코드에는 트랜잭션의 잔재가 남아 있었다</b>. 트랜잭션을 어디에 적용할 것인가는 여전히 코드에 노출시켜야 했고, 심지어 대부분의 비즈니스 로직을 담은 메소드에 필요한 기능이었다. 그래서 도입한 것이 바로 <code>DI를 이용해 데코레이터 패턴을 적용하는 방법</code>이었다. 데코레이터 패턴을 적용해서, 비즈니스 로직을 담은 클래스에 코드에는 전혀 영향을 주지 않으면서 트랜잭션 부가기능을 자유롭게 부여했다.</p>
+<p>&nbsp;</p>
+<p>프록시를 이용해서 비즈니스 로직 코드에서 트랜잭션 코드는 모두 제거할 수 있었지만, <b>비즈니스 로직 인터페이스의 모든 메소드마다 트랜잭션 기능을 부여하는 코드를 넣어 프록시 클래스를 만드는 작업이 오히려 큰 짐</b>이 됐다. 그래서 프록시 클래스 없이도 프록시 오브젝트를 런타임 시에 만들어주는 <code>JDK 다이내믹 프록시 기술을 적용</code>했다.</p>
+<p>&nbsp;</p>
+<p><b>트랜잭션 적용 대상이 되는 빈마다 일일이 프록시 팩토리 빈을 설정해줘야 한다는 부담</b>이 남아 있었다. 이를 해결하기 위해 스프링 컨테이너의 <code>빈 생성 후처리 기법을 활용해 컨테이너 초기화 시점에서 자동으로 프록시를 만들어주는 방법을 도입</code>했다. 프록시를 적용할 대상을 일일이 지정하지 않고 패턴을 이용해 자동으로 선정할 수 있도록, <code>클래스를 선정하는 기능을 담은 확장된 포인트컷을 사용</code>했다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>AOP, Aspect Oriented Programming</h3>
+<p>트랜잭션 적용 코드는 기존에 써왔던 코드 분리, 관심사의 분리, 인터페이스 도입, DI 등의 방법으로는 간단하게 분리할 수 없었다. 왜냐하면 트랜잭션 경계설정 기능은 <code>다른 모듈의 코드에 부가적으로 부여되는 기능이라는 특징</code>이 있기 때문이다. 그래서 트랜잭션 코드는 한데 모을 수 없고, <code>애플리케이션 전반에 여기저기 흩어져 있다</code>. 따라서 트랜잭션 경계설정 기능을 독립된 모듈로 만들려면 지금까지 적용해온 다이내믹 프록시나 빈 후처리 기술 같은 복잡한 기술이 필요하다.</p>
+<p>&nbsp;</p>
+<p>트랜잭션 같은 부가기능은 핵심기능과 같은 방식으로는 모듈화하기가 매우 힘들다. 이름 그대로 부가기능이기 때문에 <code>스스로는 독립적인 방식으로 존재해서는 적용되기 어렵기 때문</code>이다. 트랜잭션 부가기능이란 트랜잭션 기능을 추가해줄 다른 대상, 즉 타깃이 존재해야만 의미가 있다. 따라서 각 기능을 부가할 대상인 각 타깃의 코드 안에 침투하거나 긴밀하게 연결되어 있지 않으면 안 된다.</p>
+<p>&nbsp;</p>
+<p>결국 지금까지 해온 모든 작업은 <code>핵심기능에 부여되는 부가기능을 효과적으로 모듈화하는 방법</code>을 찾는 것이었고, 어드바이스와 포인트컷을 결합한 어드바이저가 단순하지만 이런 특성을 가진 원시적인 형태로 만들어지게 됐다.</p>
+<p>&nbsp;</p>
+<p>전통적인 객체지향 기술의 설계 방법으로는 독립적인 모듈화가 불가능한 부가기능을 어떻게 모듈화할 것인가를 연구해온 사람들은, 이 부가기능 모듈화 작업은 기존의 객체지향 설계 패러다임과는 구분되는 새로운 특성이 있다고 생각했다. 그래서 이런 부가기능 모듈을 객체지향에서 사용하는 오브젝트와는 다르게 특별한 이름으로 부르기 시작했는데, 그것이 바로 <code>애스펙트(aspect)</code>다. 애스펙트란 그 자체로 애플리케이션의 핵심기능을 담고 있지는 않지만, 애플리케이션을 구성하는 중요한 한 가지 요소이고, 핵심기능에 부가되어 의미를 갖는 특별한 모듈을 가리킨다.</p>
+<p>&nbsp;</p>
+<p>애스펙트는 부가될 기능을 정의한 코드인 어드바이스와, 어드바이스를 어디에 적용할지를 결정하는 포인트컷을 함께 갖고 있다. 애스펙트는 그 단어의 의미대로 <code>애플리케이션을 구성하는 한 가지 측면</code>이라고 생각할 수 있다. 핵심기능 코드 사이에 침투한 부가기능을 독립적인 모듈인 애스펙트로 구분해내면서, 핵심기능은 순수하게 그 기능을 담은 코드로만 존재하고 독립적으로 살펴볼 수 있도록 구분된 면에 존재하게 된 것이다.</p>
+<p>&nbsp;</p>
+<p>이렇게 <b>애플리케이션의 핵심적인 기능에서 부가적인 기능을 분리해서 애스펙트라는 독특한 모듈로 만들어서 설계하고 개발하는 방법</b>을 <code>애스펙트 지향 프로그래밍(Aspect Oriented Programming)</code> 또는 약자로 <code>AOP</code>라고 부른다. AOP는 OOP를 돕는 보조적인 기술이지 OOP를 완전히 대체하는 새로운 개념은 아니다. AOP는 결국 애플리케이션을 다양한 측면에서 독립적으로 모델링하고, 설계하고, 개발할 수 있도록 만들어주는 것이다. 애플리케이션을 특정한 관점을 기준으로 바라볼 수 있게 해준다는 의미에서 AOP를 <code>관점 지향 프로그래밍</code>이라고도 한다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>AOP 적용 기술</h3>
+<p>스프링 AOP의 핵심은 <code>프록시</code>를 이용했다는 것이다. 프록시로 만들어서 DI로 연결된 빈 사이에 적용해 타깃의 메소드 호출 과정에 참여해서 부가기능을 제공해주도록 만들었다. 그리고 프록시 방식을 사용했기 때문에 메소드 호출 과정에 참여해서 부가기능을 제공해준다. 따라서 스프링 AOP의 부가기능을 담은 어드바이스가 적용되는 대상은 오브젝트의 메소드다.</p>
+<p>&nbsp;</p>
+<p>독립적으로 개발한 부가기능 모듈을 다양한 타깃에 다이내믹하게 적용해주기 위해 가장 중요한 역할을 맡고 있는 게 바로 프록시다. 그래서 스프링 AOP는 <code>프록시 방식의 AOP</code>라고 할 수 있다.</p>
+<p>&nbsp;</p>
+<p>프록시 방식이 아닌 AOP도 물론 있다. AOP 기술의 원조이자, 가장 강력한 AOP 프레임워크로 불리는 <code>AspectJ</code>는 프록시를 사용하지 않는 대표적인 AOP 기술이다. AspectJ는 프록시처럼 간접적인 방법이 아니라, <code>타깃 오브젝트를 뜯어고쳐서 부가기능을 직접 넣어주는 직접적인 방법</code>을 사용한다. 컴파일된 타깃의 클래스 파일 자체를 수정하거나 클래스가 JVM에 로딩되는 시점을 가로채서 바이트코드를 조작하는 복잡한 방법을 사용하는 것이다. 왜 그런 복잡한 방법을 사용할까?</p>
+<p>&nbsp;</p>
+<p>첫째는 바이트코드를 조작해서 타깃 오브젝트를 직접 수정해버리면 <code>스프링과 같은 DI 컨테이너의 도움을 받아서 자동 프록시 생성 방식을 사용하지 않아도 AOP를 적용할 수 있기 때문</code>이다. 둘째는 프록시 방식보다 훨씬 강력하고 유연한 AOP가 가능하기 때문이다. 프록시 방식의 AOP는 부가기능 부여 대상이 메소드로 한정된다. 하지만 바이트코드를 직접 조작해서 AOP를 적용하면 <code>오브젝트의 생성, 필드 값의 조회와 조작, 스태틱 초기화 등의 다양한 작업에 부가기능을 부여해줄 수 있다</code>.</p>
+<p>&nbsp;</p>
+<p>물론 대부분의 부가기능은 프록시 방식을 사용해 메소드의 호출 시점에 부여하는 것으로 충분하다. 간혹 특별한 요구사항이 생겨서 스프링 AOP의 기능을 넘어서는 기능이 필요하다면, 그때는 AspectJ를 동시에 적용해줄 수도 있다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>AOP의 용어</h3>
+<p>AOP에서 많이 사용하는 몇 가지 용어를 살펴보자.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※ 타깃</b></span></p>
+<p>타깃은 부가기능을 부여할 대상이다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;어드바이스</b></span></p>
+<p>어드바이스는 타깃에게 제공할 부가기능을 담은 모듈이다. 어드바이스는 오브젝트로 정의하기도 하지만 메소드 레벨에서 정의할 수도 있다. 또 메소드 호출 과정에 전반적으로 참여하는 것도 있고, 예외가 발생했을 때만 동작하는 어드바이스처럼 메소드 호출 과정의 일부에서만 동작하는 어드바이스도 있다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;조인 포인트</b></span></p>
+<p>조인 포인트란 어드바이스가 적용될 수 있는 위치를 말한다. 스프링의 프록시 AOP에서 조인 포인트는 메소드의 실행 단계뿐이다. 타깃 오브젝트가 구현한 인터페이스의 모든 메소드는 조인 포인트가 된다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;포인트컷</b></span></p>
+<p>포인트컷이란 어드바이스를 적용할 조인 포인트를 선별하는 작업 또는 그 기능을 정의한 모듈을 말한다. 스프링 AOP의 조인 포인트는 메소드의 실행이므로 스프링의 포인트컷은 메소드를 선정하는 기능을 갖고 있다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;프록시</b></span></p>
+<p>프록시는 클라이언트와 타깃 사이에 투명하게 존재하면서 부가기능을 제공하는 오브젝트다. DI를 통해 타깃 대신 클라이언트에게 주입되며, 클라이언트의 메소드 호출을 대신 받아서 타깃에 위임해주면서, 그 과정에서 부가기능을 부여한다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;어드바이저</b></span></p>
+<p>어드바이저는 포인트컷과 어드바이스를 하나씩 갖고 있는 오브젝트다. 어드바이저는 어떤 부가기능(어드바이스)을 어디에(포인트컷) 전달할 것인가를 알고 있는 AOP의 가장 기본이 되는 모듈이다. 어드바이저는 스프링 AOP에서만 사용되는 특별한 용어이고, 일반적인 AOP에서는 사용되지 않는다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;애스펙트</b></span></p>
+<p>OOP의 클래스와 마찬가지로 애스펙트는 AOP의 기본 모듈이다. 한 개 또는 그 이상의 포인트컷과 어드바이스의 조합으로 만들어지며 보통 싱글톤 형태의 오브젝트로 존재한다. 따라서 클래스와 같은 모듈 정의와 오브젝트와 같은 인스턴스의 구분이 특별히 없다. 두 가지 모두 애스펙트라고 불린다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h2>트랜잭션 속성</h2>
+<h3>트랜잭션 전파</h3>
+<p>스프링의 트랜잭션 추상화를 설명하면서 그냥 넘어간 부분이 있다. 트랜잭션 매니저에서 트랜잭션을 가져올 때 사용한 DefaultTransactionDefinition 오브젝트다.</p>
+<pre class="aspectj"><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(MethodInvocation invocation)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
+    TransactionStatus status = <span class="hljs-keyword">this</span>.transactionManager.getTransaction(<span class="hljs-keyword">new</span> DefaultTransactionDefinition());
+    <span class="hljs-keyword">try</span> {
+        Object ret = invocation.proceed();
+        <span class="hljs-keyword">this</span>.transactionManager.commit(status);
+        <span class="hljs-keyword">return</span> ret;
+    } <span class="hljs-keyword">catch</span> (RuntimeException e) {
+        <span class="hljs-keyword">this</span>.transactionManager.rollback(status);
+        <span class="hljs-keyword">throw</span> e;
+    }
+}</code></pre>
+<p>트랜잭션을 가져올 때 파라미터로 트랜잭션 매니저에게 전달하는 DefaultTransactionDefinition의 용도가 무엇인지 알아보자. 트랜잭션이라고 모두 같은 방식으로 동작하는 것은 아니다. DefaultTransactionDefinition이 구현하고 있는 TransactionDefinition 인터페이스는 트랜잭션의 동작방식에 영향을 줄 수 있는 네 가지 속성을 정의하고 있다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;트랜잭션 전파</b></span></p>
+<p>트랜잭션 전파란 트랜잭션의 경계에서 <code>이미 진행 중인 트랜잭션이 있을 때 또는 없을 때 어떻게 동작할 것인가를 결정하는 방식</code>을 말한다. 트랜잭션 A가 진행되는 도중 트랜잭션 B가 시작되었을 때 어떻게 해줄 것인가에 대한 설정이다. 대표적으로 다음과 같은 트랜잭션 전파 속성을 줄 수 있다.</p>
+<pre class="haml"><code class="hljs diff"><span class="hljs-deletion">- PROPAGATION_REQUIRED : 진행 중인 트랜잭션이 없으면 새로 시작하고, 이미 시작된 트랜잭션이 있으면 이에 참여한다. 가장 많이 사용하고, DefaultTransactionDefinition도 이 속성을 사용한다.</span>
+<span class="hljs-deletion">- PROPAGATION_REQUIRES_NEW : 항상 새로운 트랜잭션을 시작한다.</span>
+<span class="hljs-deletion">- PROPAGATION_NOT_SUPPORTED : 트랜잭션 없이 동작하도록 만든다. 하나의 트랜잭션 내에 여러 메소드 중 특별한 메소드만 트랜잭션 적용에서 제외하려고 할 때 유용하게 쓸 수 있다.</span></code></pre>
+<p>트랜잭션 매니저를 통해 트랜잭션을 시작하려고 할 때 getTransaction()이라는 메소드를 사용하는 이유는 바로 이 트랜잭션 전파 속성이 있기 때문이다. 트랜잭션 전파 속성과 현재 진행 중인 트랜잭션이 존재하는지 여부에 따라서 새로운 트랜잭션을 시작할 수도 있고, 이미 진행 중인 트랜잭션에 참여하기만 할 수도 있다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;격리 수준</b></span></p>
+<p>모든 DB 트랜잭션은 격리수준을 갖고 있어야 한다. 서버환경에서는 여러 개의 트랜잭션이 동시에 진행될 수 있다. 가능하다면 모든 트랜잭션이 순차적으로 진행돼서 다른 트랜잭션의 작업에 독립적인 것이 좋겠지만, 그러자면 성능이 크게 떨어질 수밖에 없다. 따라서 적절하게 격리수준을 조정해서 <code>가능한 한 많은 트랜잭션을 동시에 진행시키면서도 문제가 발생하지 않게 하는 제어가 필요</code>하다. DefaultTransactionDefinition에 설정된 격리수준은 DataSource에 설정되어 있는 격리수준을 따른다는 뜻의 ISOLATION_DEFAULT다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;제한시간</b></span></p>
+<p>트랜잭션을 수행하는 제한시간(timeout)을 설정할 수 있다. DefaultTransactionDefinition의 기본 설정은 제한시간이 없는 것이다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;읽기전용</b></span></p>
+<p>읽기전용으로 설정해두면 트랜잭션 내에서 데이터를 조작하는 시도를 막아줄 수 있다. 또한 데이터 액세스 기술에 따라서 성능이 향상될 수도 있다.</p>
+<p>&nbsp;</p>
+<p>트랜잭션 정의를 수정하려면 어떻게 해야 할까? TransactionDefinition 오브젝트를 생성하고 사용하는 코드는 트랜잭션 경계설정 기능을 가진 TransactionAdvice다. DefaultTransactionDefinition을 사용하는 대신 외부에서 정의된 TransactionDefinition 오브젝트를 DI 받아서 사용하도록 만들면 된다. 하지만 이 방법으로 트랜잭션 속성을 변경하면 TransactionAdvice를 사용하는 모든 트랜잭션의 속성이 한꺼번에 바뀐다는 문제가 잇다. <code>원하는 메소드만 선택해서 독자적인 트랜잭션 정의를 적용할 수 있는 방법은 없을까?</code></p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>트랜잭션 인터셉터</h3>
+<p>메소드별로 다른 트랜잭션 정의를 적용하려면 어드바이스의 기능을 확장해야 한다. 스프링에는 편리하게 트랜잭션 경계설정 어드바이스로 사용할 수 있도록 만들어진 TransactionInterceptor가 존재한다. TransactionInterceptor 어드바이스의 동작방식은 기존의 TransactionAdvice와 크게 다르지 않고, 다만 트랜잭션 정의를 메소드 이름 패턴을 이용해서 다르게 지정할 수 있는 방법을 추가로 제공해줄 뿐이다.</p>
+<p>&nbsp;</p>
+<p>TransactionInterceptor의 두 번째 프로퍼티는 Properties 타입의 transactionAttributes인데, 트랜잭션 속성을 정의한 프로퍼티다. 트랜잭션 속성은 TransactionDefinition의 네 가지 기본 항목에 rollbackOn()이라는 메소드를 하나 더 갖고 있는 TransactionAttribute 인터페이스로 정의된다. rollbackOn()은 어떤 예외가 발생하면 롤백을 할 것인가를 결정하는 메소드다. 이 TransactionAttribute를 이용하면 트랜잭션 부가기능의 동작 방식을 모두 제어할 수 있다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>트랜잭션 애노테이션</h3>
+<p>포인트컷 표현식과 트랜잭션 속성을 이용해 트랜잭션을 일괄적으로 적용하는 방식은 대부분의 상황에 잘 들어맞는다. 그런데 가끔은 클래스나 메소드에 따라 각각 다른 트랜잭션 속성을 적용해야 하는 경우도 있다. 그런 경우를 위해 직접 타깃에 트랜잭션 속성정보를 가진 애노테이션을 지정하는 방법이 있다. <code>@Transactional</code> 애노테이션의 정의는 다음과 같다.</p>
+<pre class="java"><code class="hljs"><span class="hljs-keyword">package</span> org.springframework.transaction.annotation;
+
+<span class="hljs-meta">@Target</span>({ElementType.METHOD, ElementType.TYPE}) <span class="hljs-comment">// 애노테이션을 사용할 대상 지정. 메소드와 타입(클래스, 인터페이스)</span>
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME) <span class="hljs-comment">// 애노테이션 정보가 언제까지 유지되는지를 지정. 런타임 때도 애노테이션 정보를 리플렉션을 통해 얻을 수 있다.</span>
+<span class="hljs-meta">@Inherited</span> <span class="hljs-comment">// 상속을 통해서도 애노테이션 정보를 얻을 수 있게 한다.</span>
+<span class="hljs-meta">@Documented</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Transactional { <span class="hljs-comment">// 트랜잭션 속성의 모든 항목을 엘리먼트로 지정할 수 있다.</span>
+    <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> ""</span>;
+    <span class="hljs-function">Propagation <span class="hljs-title">propagation</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> Propagation.REQUIRED</span>;
+    <span class="hljs-function">Isolation <span class="hljs-title">isolation</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> Isolation.DEFAULT</span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">timeout</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> TransactionDefinition.TIMEOUT_DEFAULT</span>;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">readOnly</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">false</span></span>;
+    Class&lt;? extends Throwable&gt;[] rollbackFor() <span class="hljs-keyword">default</span> {};
+    String[] rollbackForClassName() <span class="hljs-keyword">default</span> {};
+    Class&lt;? extends Throwable&gt;[] noRollbackFor() <span class="hljs-keyword">default</span> {};
+    String[] noRollbackForClassName() <span class="hljs-keyword">default</span> {};
+}</code></pre>
+<p>스프링은 @Transactional을 적용할 때 4단계의 대체(fallback) 정책을 이용하게 해준다. 메소드의 속성을 확인할 때 <code>타깃 메소드, 타깃 클래스, 선언 메소드, 선언 타입(클래스, 인터페이스)의 순서에 따라서 @Transactional이 적용됐는지 차례로 확인하고, 가장 먼저 발견되는 속성정보를 사용하게 하는 방법</code>이다.</p>
+<p>&nbsp;</p>
+<p>다음과 같이 사용할 수 있다.</p>
+<pre class="java"><code class="hljs"><span class="hljs-meta">@Transactional</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserService</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(User user)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deleteAll</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(User user)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">upgradeLevels</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-meta">@Transactional</span>(readOnly=<span class="hljs-keyword">true</span>) <span class="hljs-comment">// 메소드 단위로 부여된 트랜잭션 속성이 타입 레벨에 부여된 것보다 우선한다.</span>
+    <span class="hljs-function">User <span class="hljs-title">get</span><span class="hljs-params">(String id)</span></span>;
+
+    <span class="hljs-meta">@Transactional</span>(readOnly=<span class="hljs-keyword">true</span>)
+    <span class="hljs-function">List&lt;User&gt; <span class="hljs-title">getAll</span><span class="hljs-params">()</span></span>;
+}</code></pre>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>테스트를 위한 트랜잭션 애노테이션</h3>
+<p>테스트에도 @Transactional을 적용할 수 있다. 테스트 클래스 또는 메소드에 @Transactional 애노테이션을 부여해주면 마치 타깃 클래스나 인터페이스에 적용된 것처럼 테스트 메소드에 트랜잭션 경계가 자동으로 설정된다. 하지만 중요한 차이점이 있는데, <code>테스트용 트랜잭션은 테스트가 끝나면 자동으로 롤백된다</code>는 것이다. 테스트에 적용된 @Transactional은 기본적으로 트랜잭션을 강제 롤백시키도록 설정되어 있다. @Transactional을 지정해주면 롤백 테스트가 되는 것이다.</p>
+<p>&nbsp;</p>
+<p>그런데 테스트 메소드 안에서 진행되는 작업을 하나의 트랜잭션으로 묶고 싶기는 하지만 강제 롤백을 원하지 않을 수도 있다. 이럴 때는 <code>@Rollback</code>이라는 애노테이션을 적용하면 된다. @Rollback은 롤백 여부를 지정하는 값을 갖고 있다. @Rollback의 기본 값은 true다. 따라서 <code>트랜잭션은 적용되지만 롤백을 원치 않는다면 @Rollback(false)</code>라고 해줘야 한다.</p>
+<p>&nbsp;</p>
+<p>@Rollback은 메소드 레벨에서만 적용되기 때문에 모든 메소드에 해당 설정을 주려면 <code>@TransactionConfiguration(defaultRollback=false)</code>를 사용해야 한다. 이 애노테이션은 클래스 레벨에 부여할 수 있다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>참고</h3>
+<p><a href="http://acornpub.co.kr/book/toby-spring3.1-vol1">http://acornpub.co.kr/book/toby-spring3.1-vol1</a></p>
+<figure id="og_1572178475431" contenteditable="false" data-ke-type="opengraph" data-og-type="book" data-og-title="토비의 스프링 3.1 Vol. 1 스프링의 이해와 원리" data-og-description="스프링의 핵심 프로그래밍 모델의 원리와 이에 적용된 다양한 디자인 패턴, 프로그래밍 기법의 이해를 돕는 책" data-og-host="www.acornpub.co.kr" data-og-source-url="http://acornpub.co.kr/book/toby-spring3.1-vol1" data-og-url="http://www.acornpub.co.kr/book/toby-spring3.1-vol1" data-og-image="https://scrap.kakaocdn.net/dn/tSF55/hyDqiuXbBd/gMBkkqSd9aj0QuYOQWrlzk/img.jpg?width=458&amp;height=621&amp;face=0_0_458_621,https://scrap.kakaocdn.net/dn/5DesY/hyDqnC1nRA/ZOH9vFpLyClsf8AikKkEu0/img.png?width=258&amp;height=350&amp;face=0_0_258_350"><a href="http://www.acornpub.co.kr/book/toby-spring3.1-vol1" target="_blank" rel="noopener" data-source-url="http://acornpub.co.kr/book/toby-spring3.1-vol1">
+<div class="og-image" style="background-image: url('https://scrap.kakaocdn.net/dn/tSF55/hyDqiuXbBd/gMBkkqSd9aj0QuYOQWrlzk/img.jpg?width=458&amp;height=621&amp;face=0_0_458_621,https://scrap.kakaocdn.net/dn/5DesY/hyDqnC1nRA/ZOH9vFpLyClsf8AikKkEu0/img.png?width=258&amp;height=350&amp;face=0_0_258_350');">&nbsp;</div>
+<div class="og-text">
+<p class="og-title">토비의 스프링 3.1 Vol. 1 스프링의 이해와 원리</p>
+<p class="og-desc">스프링의 핵심 프로그래밍 모델의 원리와 이에 적용된 다양한 디자인 패턴, 프로그래밍 기법의 이해를 돕는 책</p>
+<p class="og-host">www.acornpub.co.kr</p>
+</div>
+</a></figure><div class="container_postbtn #post_button_group">
+    <div class="postbtn_like">
+        <div class="wrap_btn">
+    <button type="button" class="btn_post like_btn uoc-icon" data-uoc-svc="tistory" data-uoc-uid="3243776_20" data-uoc-sc="" data-uoc-pcurl="https://www.wbluke.com/20" data-uoc-fetchurl="http://api.kakao.tistory.com/like/fetch?uid=3243776_20">
+        <div class="uoc-icon">
+            <span class="ico_postbtn ico_like">좋아요</span>
+            <span class="txt_like uoc-text">공감</span>
+            <span class="txt_like uoc-count" style="display: none;"></span>
+        </div>
+    </button>
+</div>
+        <div class="wrap_btn wrap_btn_share">
+    <button type="button" class="btn_post sns_btn btn_share" data-thumbnail-url="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbFaHKL%2Fbtqzs6tP9BM%2F4KqhfoX8QE7b4KSwNSYha1%2Fimg.png" data-title="[토비의 스프링] 6. AOP (2)" data-description="이전 글 : [토비의 스프링] 6. AOP (1) 지금까지 해왔던 작업은 비즈니스 로직에 반복적으로 등장하는 트랜잭션 코드를 투명하게 분리해내는 것이었다. 투명하다는 것은 투명한 유리를 사이에 둔 것처럼, 부가기능.." data-profile-image="https://tistory2.daumcdn.net/tistory/3243776/attach/5b586e2862584b7cbe0756f0ce9788b9" data-profile-name="우비닉" data-pc-url="https://www.wbluke.com/20" data-blog-title="함께 자라기">
+        <span class="ico_postbtn ico_share">공유하기</span>
+    </button>
+</div>
+        <div class="wrap_btn">
+    <button type="button" class="btn_post" data-entry-id="20">
+        <span class="ico_postbtn ico_statistics">통계</span>
+    </button>
+</div>
+        <div class="wrap_btn wrap_btn_etc" data-entry-id="20" data-entry-visibility="public" data-category-visibility="public">
+    <button type="button" class="btn_post btn_etc1"><span class="ico_postbtn ico_etc">글 요소</span></button>
+</div>
+    </div>
+        <div class="postbtn_ccl" data-ccl-type="3">
+    <a href="https://creativecommons.org/licenses/by/4.0/deed.ko" target="_blank" class="link_ccl">
+        <span class="bundle_ccl">
+            <span class="ico_postbtn ico_ccl1">저작자표시</span>        </span>
+    </a>
+</div>
+    <!--
+<rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <Work rdf:about="">
+        <license rdf:resource="http://creativecommons.org/licenses/by-fr/2.0/kr/" />
+    </Work>
+    <License rdf:about="http://creativecommons.org/licenses/by-fr/">
+        <permits rdf:resource="http://web.resource.org/cc/Reproduction"/>
+        <permits rdf:resource="http://web.resource.org/cc/Distribution"/>
+        <requires rdf:resource="http://web.resource.org/cc/Notice"/>
+        <requires rdf:resource="http://web.resource.org/cc/Attribution"/>
+                <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/>
+                    </License>
+</rdf:RDF>
+-->
+</div><div class="another_category another_category_color_gray">
+<h4>'<a href="/category/Spring">Spring</a>&nbsp;&gt;&nbsp;<a href="/category/Spring/토비의%20스프링%203.1">토비의 스프링 3.1</a>' 카테고리의 다른 글</h4>
+<table>
+<tbody><tr>
+<th>
+<a href="/20?category=351150" class="current">[토비의 스프링] 6. AOP (2)</a>&nbsp;&nbsp;<span>(0)</span>
+</th>
+<td>
+2019.11.02</td>
+</tr>
+<tr>
+<th>
+<a href="/17?category=351150">[토비의 스프링] 6. AOP (1)</a>&nbsp;&nbsp;<span>(2)</span>
+</th>
+<td>
+2019.10.27</td>
+</tr>
+<tr>
+<th>
+<a href="/16?category=351150">[토비의 스프링] 5. 서비스 추상화</a>&nbsp;&nbsp;<span>(0)</span>
+</th>
+<td>
+2019.10.12</td>
+</tr>
+<tr>
+<th>
+<a href="/15?category=351150">[토비의 스프링] 4. 예외</a>&nbsp;&nbsp;<span>(0)</span>
+</th>
+<td>
+2019.10.10</td>
+</tr>
+<tr>
+<th>
+<a href="/14?category=351150">[토비의 스프링] 3. 템플릿</a>&nbsp;&nbsp;<span>(0)</span>
+</th>
+<td>
+2019.10.03</td>
+</tr>
+<tr>
+<th>
+<a href="/13?category=351150">[토비의 스프링] 2. 테스트</a>&nbsp;&nbsp;<span>(0)</span>
+</th>
+<td>
+2019.10.03</td>
+</tr>
+</tbody></table></div></div>
+								</div>
+								<div class="area_etc">
+									
+										<dl class="list_tag">
+											<dt class="tit_tag">TAG</dt>
+											<dd class="desc_tag"><a href="/tag/%EC%8A%A4%ED%94%84%EB%A7%81" rel="tag">스프링</a>,
+<a href="/tag/%ED%86%A0%EB%B9%84" rel="tag">토비</a>,
+<a href="/tag/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81" rel="tag">토비의 스프링</a>,
+<a href="/tag/%ED%94%84%EB%A1%9D%EC%8B%9C" rel="tag">프록시</a></dd>
+										</dl>
+									
+								</div>
+
+
+								<div class="area_reply ">
+
+
+									<strong class="tit_reply">댓글
+										<button type="button" class="btn_reply on" onclick="$.Area.Comment.changeStatus();">
+											<span id="commentCount20_0">0</span>
+											<span class="ico_skin ico_reply">댓글펼치기</span>
+										</button>
+									</strong>
+
+
+
+									<!-- 대체텍스트 댓글펼치기/댓글접기 변경 -->
+									<div id="entry20Comment">
+										<button type="button" class="btn_replymore">이전 댓글 보기</button>
+										
+
+										<form method="post" action="/comment/add/20" onsubmit="return false" style="margin: 0">
+											<fieldset class="fld_reply">
+												<legend class="screen_out">댓글쓰기 폼</legend>
+												<div class="reply_write ">
+													<label for="comment" class="lab_write"></label>
+													<textarea id="comment" name="comment" class="tf_reply" placeholder="여러분의 소중한 댓글을 입력해주세요" tabindex="1"></textarea>
+												</div>
+												<div class="reply_writer">
+													
+
+													<div class="writer_btn">
+														<button type="submit" class="btn_enter" onclick="addComment(this, 20); return false;" tabindex="5">입력</button>
+													</div>
+												</div>
+											</fieldset>
+										</form>
+
+									</div><script type="text/javascript">loadedComments[20]=true;findFragmentAndHighlight(20)</script>
+								</div>
+							</div>
+						
+					</div>
+				
+
+				
+
+				
+
+
+				
+					<div class="area_paging area_paging_list">
+						<span class="inner_paging">
+							<a class="ico_skin link_prev no-more-prev">이전</a>
+							
+								<a class="link_page"><span class="selected">1</span></a>
+							
+								<a href="/17" class="link_page"><span>2</span></a>
+							
+								<a href="/18" class="link_page"><span>3</span></a>
+							
+								<a href="/16" class="link_page"><span>4</span></a>
+							
+								<a href="/15" class="link_page"><span>5</span></a>
+							
+								<a class="link_page"><span>···</span></a>
+							
+								<a href="/2" class="link_page"><span>14</span></a>
+							
+							<a href="/17" class="ico_skin link_next ">다음</a>
+						</span>
+					</div>
+
+					<div class="area_paging area_paging_simple">
+						<div class="inner_paging">
+							<a class="link_prev no-more-prev">
+								<span class="ico_skin ico_prev"></span>이전
+							</a>
+
+							<a href="/17" class="link_next ">
+								다음<span class="ico_skin ico_next"></span>
+							</a>
+						</div>
+					</div>
+				
+
+
+				<div id="mEtc" class="wrap_etc">
+					<div class="inner_aside">
+						
+								<!-- 최근에 올라온 글 -->
+								<div class="box_aside">
+									<strong>최근에 올라온 글</strong>
+									<ul class="list_board">
+										
+											<li><a href="/20" class="link_board">[토비의 스프링] 6. AOP (2)</a></li>
+										
+
+											<li><a href="/17" class="link_board">[토비의 스프링] 6. AOP (1)</a></li>
+										
+
+											<li><a href="/18" class="link_board">JPA Pagination을 이용한..</a></li>
+										
+
+											<li><a href="/16" class="link_board">[토비의 스프링] 5. 서비스..</a></li>
+										
+
+											<li><a href="/15" class="link_board">[토비의 스프링] 4. 예외</a></li>
+										
+
+											<li><a href="/9" class="link_board">IoC랑 DI가 그래서 도대체..</a></li>
+										
+
+											<li><a href="/14" class="link_board">[토비의 스프링] 3. 템플릿</a></li>
+										
+
+											<li><a href="/13" class="link_board">[토비의 스프링] 2. 테스트</a></li>
+										
+									</ul>
+								</div>
+							
+								<!-- 최근에 달린 댓글 -->
+								<div class="box_aside">
+									<strong>최근에 달린 댓글</strong>
+									<ul class="list_board">
+										
+											<li><a href="/17#comment5595542" class="link_board">글을 읽고 많은 도움을 받았습..</a></li>
+										
+
+											<li><a href="/17#comment5595541" class="link_board">재촉한 보람이 있네요^^ 다음..</a></li>
+										
+
+											<li><a href="/2#comment5592049" class="link_board">네ㅎㅎ dev@wbluke.com 으로..</a></li>
+										
+
+											<li><a href="/2#comment5591825" class="link_board">우아한 테크코스에 대해서 여..</a></li>
+										
+
+											<li><a href="/9#comment5589033" class="link_board">우비닉,,, 그는 대체.... 못하..</a></li>
+										
+
+											<li><a href="/2#comment5584599" class="link_board">여기서 이러시면 안됩니다 우..</a></li>
+										
+
+											<li><a href="/2#comment5584571" class="link_board">너무 멋있어요!!! 어떻게 하면..</a></li>
+										
+
+											<li><a href="/9#comment5582149" class="link_board">좋은글 감사합니다 ~~ 구독 두..</a></li>
+										
+									</ul>
+								</div>
+							
+								<!-- 태그 클라우드 -->
+								<div class="box_aside">
+									<strong>TAG</strong>
+									<ul class="list_tag">
+										
+											<li><a href="/tag/%ED%86%A0%EC%9D%B4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8" class="link_tag cloud5">토이프로젝트</a></li>
+										
+											<li><a href="/tag/DI" class="link_tag cloud4">DI</a></li>
+										
+											<li><a href="/tag/%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98" class="link_tag cloud4">트랜잭션</a></li>
+										
+											<li><a href="/tag/%ED%86%A0%EB%B9%84" class="link_tag cloud1">토비</a></li>
+										
+											<li><a href="/tag/%ED%8E%98%EC%9D%B4%EC%A7%80%EB%84%A4%EC%9D%B4%EC%85%98" class="link_tag cloud5">페이지네이션</a></li>
+										
+											<li><a href="/tag/%EC%9A%B0%EC%95%84%ED%95%9C%ED%85%8C%ED%81%AC%EC%BD%94%EC%8A%A4" class="link_tag cloud4">우아한테크코스</a></li>
+										
+											<li><a href="/tag/IOC" class="link_tag cloud4">IOC</a></li>
+										
+											<li><a href="/tag/%EC%8A%A4%ED%94%84%EB%A7%81" class="link_tag cloud1">스프링</a></li>
+										
+											<li><a href="/tag/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81" class="link_tag cloud1">토비의 스프링</a></li>
+										
+											<li><a href="/tag/%ED%94%84%EB%A1%9D%EC%8B%9C" class="link_tag cloud4">프록시</a></li>
+										
+											<li><a href="/tag/%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC" class="link_tag cloud4">예외처리</a></li>
+										
+											<li><a href="/tag/%EC%9A%B0%ED%85%8C%EC%BD%94" class="link_tag cloud4">우테코</a></li>
+										
+											<li><a href="/tag/%EC%9A%B0%EC%95%84%ED%95%9C%20%ED%85%8C%ED%81%AC%EC%BD%94%EC%8A%A4" class="link_tag cloud5">우아한 테크코스</a></li>
+										
+											<li><a href="/tag/%EC%8A%AC%EB%9E%99%EB%B4%87" class="link_tag cloud5">슬랙봇</a></li>
+										
+									</ul>
+									<a href="/tag" class="link_more">more</a>
+								</div>
+							
+								<!-- 방문자수 -->
+								<div class="box_aside lst">
+									<dl class="list_total">
+										<dt>Total</dt>
+										<dd>967</dd>
+									</dl>
+									<dl class="list_visitor">
+										<dt>Today</dt>
+										<dd>2</dd>
+									</dl>
+									<dl class="list_visitor">
+										<dt>Yesterday</dt>
+										<dd>52</dd>
+									</dl>
+								</div>
+							
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr class="hide">
+		<div id="dkFoot" role="contentinfo" class="area_foot">
+			Blog is powered by
+			<em class="emph_t">Tistory</em> / Designed by
+			<em class="emph_t">Tistory</em>
+		</div>
+	</div>
+
+
+<script src="https://tistory1.daumcdn.net/tistory/3243776/skin/images/script.js"></script>
+<script>
+	(function($) {
+		$.Area.init();
+	})(jQuery);
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/darcula.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script><script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+	if(!wcs_add) var wcs_add = {};
+	wcs_add["wa"] = encodeURI("	59abf72d079a");
+	wcs_do();
+</script><script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-150952173-1', 'auto');
+	ga('send', 'pageview');
+</script><script src="//search1.daumcdn.net/search/statics/common/js/g/search_dragselection.min.js"></script>
+<script>
+    (function($) {
+        $("body").bind('copy', function (e) {
+
+            var url = document.location.href,
+                decodedUrl = decodeURI(url),
+                selection = window.getSelection();
+
+
+            if (typeof window.getSelection == "undefined") {//IE8 or earlier...
+                event.preventDefault();
+
+                var pagelink = '\n\n 출처: ' + decodedUrl,
+                    copytext = selection + pagelink;
+
+                if (window.clipboardData) {
+                    window.clipboardData.setData('Text', copytext);
+                }
+                return;
+            }
+            var body_element = document.getElementsByTagName('body')[0];
+
+            //if the selection is short let's not annoy our users
+            if (("" + selection).length < 30) return;
+
+            //create a div outside of the visible area
+            var newdiv = document.createElement('div');
+            newdiv.style.position = 'absolute';
+            newdiv.style.left = '-99999px';
+            body_element.appendChild(newdiv);
+            newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+            //we need a <pre> tag workaround
+            //otherwise the text inside "pre" loses all the line breaks!
+            if (selection.getRangeAt(0).commonAncestorContainer.nodeName == "PRE") {
+                newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+            }
+
+            newdiv.innerHTML += '<br /><br />출처: <a href="' + url + '">' + escapeHTML(decodedUrl) + '</a> [함께 자라기]';
+
+            selection.selectAllChildren(newdiv);
+
+            window.setTimeout(function () {
+                body_element.removeChild(newdiv);
+            }, 200);
+        });
+    })(tjQuery);
+</script>
+	<script>
+	    lightbox.option({
+			"fadeDuration": 200,
+		    "resizeDuration": 200,
+		    "wrapAround": false,
+			"albumLabel": "%1 / %2",
+			"fitImagesInViewport":true ,
+			"stopEvent": false
+	    })
+	</script><script type="text/javascript">
+var _tiq = 'undefined' !== typeof _tiq ? _tiq : [];
+_tiq.push(['__setConfig', {enableScroll:true, enableClick:true, enableButton:true}]);
+_tiq.push(["__setParam", "svcdomain", "user.tistory.com"]);
+(function(d) {
+	var se = d.createElement('script'); se.type = 'text/javascript'; se.async = true;
+	se.src = location.protocol + '//m2.daumcdn.net/tiara/js/td.min.js';
+	var s = d.getElementsByTagName('head')[0]; s.appendChild(se);
+})(document);
+_tiq.push(['__setParam', 'param_ex', JSON.stringify({"userId":"3983921","blogId":"3243776","role":"owner","filterTarget":false,"entryId":"20"})]);
+_tiq.push(['__trackPageview']);
+_tiq.push(['__content', 't_content', {
+'c_id':'3243776_20', 
+'c_title':'[토비의 스프링] 6. AOP (2)', 
+'type':'article', 
+'author':'', 
+'author_id':'3983921', 
+'cp':'함께 자라기', 
+'cp_id':'3243776', 
+'regdata':'2019-11-02 17:29:01', 
+'plink':'https://www.wbluke.com/20', 
+'media':'pcweb', 
+}]);
+var addEvent = function (evt, fn) { window.addEventListener ? window.addEventListener(evt, fn, false) : window.attachEvent('on' + evt, fn); };
+var removeEvent = function(evt, fn) { window.removeEventListener ? window.removeEventListener(evt, fn, false) : window.detachEvent('on' + evt, fn);};
+var ua = navigator.userAgent.toLowerCase(); var isIOS = /iP[ao]d|iPhone/i.test(ua);
+var contentExStat = function() {
+		_tiq.push(['__content', 't_content_ex', {
+			'data_type':'usage'
+, 'meta': {
+'c_id':'3243776_20', 
+'c_title':'[토비의 스프링] 6. AOP (2)', 
+'type':'article', 
+'author':'', 
+'author_id':'3983921', 
+'cp':'함께 자라기', 
+'cp_id':'3243776', 
+'regdata':'2019-11-02 17:29:01', 
+'plink':'https://www.wbluke.com/20', 
+'media':'pcweb', 
+}
+}]);
+		removeEvent(isIOS ? 'pagehide' : 'beforeunload', contentExStat);
+};
+addEvent(isIOS ? 'pagehide' : 'beforeunload', contentExStat);
+</script>
+<script type="text/javascript">window.roosevelt_params_queue = window.roosevelt_params_queue || []; window.roosevelt_params_queue.push({channel_id: "dk", channel_label: 'tistory'});</script>
+<script type="text/javascript" src="//t1.daumcdn.net/midas/rt/dk_bt/roosevelt_dk_bt.js" async=""></script><script type="text/javascript">if(window.console!=undefined){setTimeout(console.log.bind(console,"%cTISTORY","font:8em Arial;color:#EC6521;font-weight:bold"),0);setTimeout(console.log.bind(console,"%c  나를 표현하는 블로그","font:2em sans-serif;color:#333;"),0);}</script><iframe style="position:absolute;width:1px;height:1px;left:-100px;top:-100px" src="//wbluke.tistory.com/api" id="editEntry"></iframe>            <div class="#menubar menu_toolbar  toolbar_rb">
+                                            <h2 class="screen_out">티스토리툴바</h2>
+                                            
+                                       </div>
+                                       <div class="#menubar menu_toolbar  toolbar_rb"></div>
+                                       <script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/script/menubar.min.js?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"></script><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_0_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;"></iframe></ins></ins></ins>        <div class="layer_tooltip">
+            <div class="inner_layer_tooltip">
+                <p class="desc_g"></p>
+            </div>
+        </div>
+        <div id="tistoryEtcLayer" class="layer_post" style="display: none;"></div><div id="tistorySnsLayer" class="layer_post" style="display: none;"><div class="bundle_post"><a href="#none" class="btn_mark" data-service="facebook"><span class="ico_sns ico_fb"></span>페이스북으로 공유</a><a href="#none" class="btn_mark" data-service="kakaotalk"><span class="ico_sns ico_kt"></span>카카오톡으로 공유</a><a href="#none" class="btn_mark" data-service="kakaostory"><span class="ico_sns ico_ks"></span>카카오스토리로 공유</a><a href="#none" class="btn_mark" data-service="twitter"><span class="ico_sns ico_tw"></span>트위터로 공유</a><a href="#none" class="btn_mark" data-service="url"><span class="ico_sns ico_url"></span>URL 복사</a><span class="ico_postbtn ico_arrbt"></span></div></div>
+
+
+<div id="lightboxOverlay" class="lightboxOverlay" style="display: none;"></div><div id="lightbox" class="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="><div class="lb-nav"><a class="lb-prev" href=""></a><a class="lb-next" href=""></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div><iframe id="google_osd_static_frame_6661804402278" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body><iframe id="google_shimpl" style="display: none;"></iframe><iframe id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20191106/r20190131/zrt_lookup.html#" data-ad-client="ca-pub-9348951692816238" style="display: none;"></iframe>
+
+<script src="../toc.js"></script>
+
+</html>

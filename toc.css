@@ -1,0 +1,42 @@
+.toc-app {
+  display: inline-block;
+  position: fixed;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.items {
+  max-height: 434px;
+  overflow-y: scroll;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+   clear: both
+}
+
+.test {
+  display: inline-block;
+  position: fixed;
+}
+
+.box-card {
+  width: 250px;
+  margin: 40 10px;
+  max-height: 520px;
+  /* overflow-y: scroll; */
+}
+
+.icon-align {
+  vertical-align: bottom;
+}
