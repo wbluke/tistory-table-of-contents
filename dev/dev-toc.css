@@ -2,44 +2,12 @@
 .toc-app {
   display: inline-block;
   position: fixed;
-}
-
-.box-card {
-  width: 250px;
-  margin: 40 10px;
-  max-height: 520px;
-}
-
-.el-card__body {
   padding: 10 20 20 20;
-}
-
-/* custom title style */
-.icon-align {
-  vertical-align: bottom;
-}
-
-/* defualt item style */
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 4px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-   clear: both
 }
 
 /* custom item style */
 .items {
-  max-height: 434px;
+	/* TODO : DOM의 높이를 넘어가면 스크롤이 생길 수 있도록 */
   overflow-y: scroll;
 }
 

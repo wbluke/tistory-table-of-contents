@@ -15,13 +15,13 @@
 </script> -->
 
 		<!-- import CSS -->
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
 <link rel="stylesheet" href="./dev-toc.css">
 <!-- import Vue before Element -->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
 <!-- import JavaScript -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
 
 
 <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/lib/lightbox/css/lightbox.min.css"><link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/content/font.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"><link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/assets/blog/7030d16adb598bf18f40d52aa2445c3890b96c04/blogs/style/content/content.css?_version_=7030d16adb598bf18f40d52aa2445c3890b96c04"><!--[if lt IE 9]><script src="https://t1.daumcdn.net/tistory_admin/lib/jquery/jquery-1.12.4.min.js"></script><![endif]--><!--[if gte IE 9]>
@@ -299,24 +299,27 @@ lightbox.options.albumLabel = "%1 / %2";
 		<div id="dkContent" class="cont_skin" role="main">
 			<div id="cMain">
 
-                <div id="app" class="toc-app">
+							<div id="toc-elements" class="toc-app items">
+							</div>
+
+                <!-- <div id="app" class="toc-app"> -->
 									<!-- <component v-bind:is="toc"></component> -->
-  								<el-card shadow="hover" class="box-card">
-        			      <div slot="header" class="clearfix">
-        			        <div>
-												<i class="material-icons icon-align">outlined_flag</i>
-												<b>Table Of Contents</b>
-        			        </div>
-										</div>
-										<div id="toc-elements" class="items">
+  								<!-- <el-card shadow="hover" class="box-card"> -->
+        			      <!-- <div slot="header" class="clearfix"> -->
+        			        <!-- <div> -->
+												<!-- <i class="material-icons icon-align">outlined_flag</i> -->
+												<!-- <b>Table Of Contents</b> -->
+        			        <!-- </div> -->
+										<!-- </div> -->
+										<!-- <div id="toc-elements" class="toc-app items"> -->
         			      	<!-- <div v-for="o in 15" :key="o" class="text item"> -->
 												<!-- <a href="#"> -->
 													<!-- {{'List item ' + o }} -->
 												<!-- </a> -->
 											<!-- </div> -->
-										</div>
-        			    </el-card>
-                </div>
+										<!-- </div> -->
+        			    <!-- </el-card> -->
+                <!-- </div> -->
 				
 					<div id="mArticle" class="article_skin">
 
@@ -344,6 +347,7 @@ lightbox.options.albumLabel = "%1 / %2";
 <p>&nbsp;</p>
 <p>지금까지 해왔던 작업은 비즈니스 로직에 반복적으로 등장하는 트랜잭션 코드를 투명하게 분리해내는 것이었다. 투명하다는 것은 투명한 유리를 사이에 둔 것처럼, 부가기능을 적용한 후에도 기존 설계와 코드에는 영향을 주지 않고 메소드가 호출되는 과정에 다이내믹하게 참여해서 부가적인 기능을 제공해주도록 만들었다는 것이다.</p>
 <hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+
 <h1>테스트 h1 태그1</h1>
 <h2>자동 프록시 생성</h2>
 <h3>자동 프록시 생성 빈 후처리기</h3>
