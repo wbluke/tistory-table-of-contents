@@ -116,13 +116,11 @@ const TOC_CARD = (function () {
       const elementsCard = document.querySelector('#toc-elements');
 
       hTags.forEach(element => {
-        const textOfHTag = element.innerText;
-
         let hTagItem;
 
         levelMap.forEach((value, key) => {
           if (element.matches(`h${key}`)) {
-            hTagItem = createTagItemByLevel(value, textOfHTag);
+            hTagItem = createTagItemByLevel(value, element);
           }
         })
 
@@ -130,8 +128,8 @@ const TOC_CARD = (function () {
       });
     }
 
-    const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, text = '') {
-      const basicItem = createBasicItemTemplate(text);
+    const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, element) {
+      const basicItem = createBasicItemBy(element);
       const blanks = generateBlanks(CONSTANTS.blanksByLevel.get(level));
 
       basicItem.insertAdjacentHTML('afterbegin', blanks)
@@ -140,9 +138,13 @@ const TOC_CARD = (function () {
       return basicItem;
     }
 
-    const createBasicItemTemplate = function (text = '') {
-      const basicItem = document.createElement('div');
-      basicItem.innerHTML += text;
+    const createBasicItemBy = function (element) {
+      const basicItem = document.createElement('a');
+
+      basicItem.innerHTML += element.innerText;
+      basicItem.classList = 'link-to-h-tag'
+      basicItem.href = '#' + generateIdOfHTag(element);
+
       return basicItem;
     }
 
