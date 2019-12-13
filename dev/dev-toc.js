@@ -45,16 +45,21 @@ const TOC_CARD = (function () {
 
     const tocCardService = new TocCardService();
 
-    const registerHTags = function () {
+    const registerHTagsOnTocCard = function () {
       const levelMap = tocCardService.getLevelsByHighestTag();
 
       tocCardService.registerTagsOnToc(levelMap);
     }
 
+    const giveIdToHTags = function () {
+      tocCardService.giveIdToHTags();
+    }
+
     const init = function () {
       const existsHTags = tocCardService.checkExistenceOfHTags();
       if (existsHTags) {
-        registerHTags();
+        registerHTagsOnTocCard();
+        giveIdToHTags();
       }
     };
 
@@ -145,10 +150,22 @@ const TOC_CARD = (function () {
       return '&nbsp;'.repeat(repeat);
     }
 
+    const giveIdToHTags = function () {
+      hTags.forEach(element => {
+        element.id = generateIdOfHTag(element);
+      });
+    }
+
+    const generateIdOfHTag = function (element) {
+      const textOfHTag = element.innerText;
+      return textOfHTag.replaceAll(' ', '-');
+    }
+
     return {
       checkExistenceOfHTags: checkExistenceOfHTags,
       getLevelsByHighestTag: getLevelsByHighestTag,
       registerTagsOnToc: registerTagsOnToc,
+      giveIdToHTags: giveIdToHTags,
     }
   };
 
