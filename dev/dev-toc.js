@@ -1,7 +1,7 @@
 const CONSTANTS = (function () {
-  const INDEX_OF_H1 = 1;
-  const INDEX_OF_H2 = 2;
-  const INDEX_OF_H3 = 3;
+  const KEY_OF_H1 = 1;
+  const KEY_OF_H2 = 2;
+  const KEY_OF_H3 = 3;
 
   const LEVEL_1 = 1;
   const LEVEL_2 = 2;
@@ -9,21 +9,21 @@ const CONSTANTS = (function () {
 
   /* 최상위 태그에 따른 레벨 Map */
   const levelsByH1 = function () {
-    return new Map([[INDEX_OF_H1, LEVEL_1], [INDEX_OF_H2, LEVEL_2], [INDEX_OF_H3, LEVEL_3]])
+    return new Map([[KEY_OF_H1, LEVEL_1], [KEY_OF_H2, LEVEL_2], [KEY_OF_H3, LEVEL_3]])
   }
 
   const levelsByH2 = function () {
-    return new Map([[INDEX_OF_H2, LEVEL_1], [INDEX_OF_H3, LEVEL_2]])
+    return new Map([[KEY_OF_H2, LEVEL_1], [KEY_OF_H3, LEVEL_2]])
   }
 
   const levelsByH3 = function () {
-    return new Map([[INDEX_OF_H3, LEVEL_1]])
+    return new Map([[KEY_OF_H3, LEVEL_1]])
   }
 
   return {
-    indexOfH1: INDEX_OF_H1,
-    indexOfH2: INDEX_OF_H2,
-    indexOfH3: INDEX_OF_H3,
+    indexOfH1: KEY_OF_H1,
+    indexOfH2: KEY_OF_H2,
+    indexOfH3: KEY_OF_H3,
     levelsByH1: levelsByH1(),
     levelsByH2: levelsByH2(),
     levelsByH3: levelsByH3(),
@@ -48,8 +48,8 @@ const TOC_CARD = (function () {
     const init = function () {
       const existsHTags = tocCardService.checkExistenceOfHTags();
       if (existsHTags) {
-        registerHTagsOnTocCard();
         giveIdToHTags();
+        registerHTagsOnTocCard();
       }
     };
 
@@ -105,12 +105,12 @@ const TOC_CARD = (function () {
     const registerTagsOnToc = function (levelMap) {
       const elementsCard = document.querySelector('#toc-elements');
 
-      hTags.forEach(element => {
+      hTags.forEach((element, indexOfHTag) => {
         let hTagItem;
 
-        levelMap.forEach((value, key) => {
+        levelMap.forEach((level, key) => {
           if (element.matches(`h${key}`)) {
-            hTagItem = createTagItemByLevel(value, element);
+            hTagItem = createTagItemByLevel(level, element, indexOfHTag);
           }
         })
 
@@ -118,8 +118,9 @@ const TOC_CARD = (function () {
       });
     }
 
-    const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, element) {
+    const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, element, indexOfHTag) {
       const basicItem = createBasicItemBy(element);
+      appendScrollEventsOn(basicItem, indexOfHTag);
 
       basicItem.classList.add(`toc-level${level}`);
 
@@ -130,21 +131,27 @@ const TOC_CARD = (function () {
       const basicItem = document.createElement('a');
 
       basicItem.innerHTML += element.innerText;
-      basicItem.classList = 'link-to-h-tag'
-      basicItem.href = '#' + generateIdOfHTag(element);
+      basicItem.classList = 'link-to-h-tag';
 
       return basicItem;
     }
 
-    const giveIdToHTags = function () {
-      hTags.forEach(element => {
-        element.id = generateIdOfHTag(element);
-      });
+    const generateIdOfHTag = function (indexOfHTag) {
+      return 'h-tag-' + indexOfHTag;
     }
 
-    const generateIdOfHTag = function (element) {
-      const textOfHTag = element.innerText;
-      return textOfHTag.replaceAll(' ', '-');
+    const appendScrollEventsOn = function (basicItem, indexOfHTag) {
+      const target = document.querySelector('#' + generateIdOfHTag(indexOfHTag));
+      basicItem.addEventListener('click', () => window.scrollTo({
+        top: target.offsetTop - 10,
+        behavior: 'smooth'
+      }));
+    }
+
+    const giveIdToHTags = function () {
+      hTags.forEach((element, indexOfHTag) => {
+        element.id = generateIdOfHTag(indexOfHTag);
+      });
     }
 
     return {
