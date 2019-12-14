@@ -54,7 +54,8 @@ const TOC_CARD = (function () {
     };
 
     const onscroll = function () {
-      tocCardService.markCurrentHTag();
+      const tocTag = tocCardService.findCurrentHTag();
+      tocCardService.markCurrentHTag(tocTag);
     }
 
     return {
@@ -70,7 +71,7 @@ const TOC_CARD = (function () {
 
     /* h1, h2, h3 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
-      return (hTags.length != 0);
+      return hTags.length != 0;
     }
 
     /** 최상위 태그에 따른 레벨 Map 받아오기
@@ -159,12 +160,9 @@ const TOC_CARD = (function () {
       });
     }
 
-    const markCurrentHTag = function () {
+    const findCurrentHTag = function () {
       const currentHTag = findCurrentMainHTag();
-      const tocTag = findTocTagCorrespondingToHTag(currentHTag);
-
-      removeAllTocActiveClass();
-      tocTag.classList.add('toc-active');
+      return findTocTagCorrespondingToHTag(currentHTag);
     }
 
     const findCurrentMainHTag = function () {
@@ -190,6 +188,11 @@ const TOC_CARD = (function () {
       return document.querySelector(`#toc-${indexOfHTag}`);
     }
 
+    const markCurrentHTag = function (tocTag) {
+      removeAllTocActiveClass();
+      tocTag.classList.add('toc-active');
+    }
+
     const removeAllTocActiveClass = function () {
       Array.prototype.slice.call(elementsCard.children).forEach(child => {
         child.classList.remove('toc-active');
@@ -201,6 +204,7 @@ const TOC_CARD = (function () {
       getLevelsByHighestTag: getLevelsByHighestTag,
       registerTagsOnToc: registerTagsOnToc,
       giveIdToHTags: giveIdToHTags,
+      findCurrentHTag: findCurrentHTag,
       markCurrentHTag: markCurrentHTag,
     }
   };
