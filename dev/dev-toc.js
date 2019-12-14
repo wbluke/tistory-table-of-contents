@@ -53,12 +53,18 @@ const TOC_CARD = (function () {
       }
     };
 
+    const onscroll = function () {
+      tocCardService.markCurrentHTag();
+    }
+
     return {
       init: init,
+      onscroll: onscroll,
     };
   };
 
   const TocCardService = function () {
+    const elementsCard = document.querySelector('#toc-elements');
     const mainContents = document.querySelector('.area_view');
     const hTags = mainContents.querySelectorAll('h1, h2, h3');
 
@@ -103,14 +109,12 @@ const TOC_CARD = (function () {
 
     /* TOC에 태그 삽입 */
     const registerTagsOnToc = function (levelMap) {
-      const elementsCard = document.querySelector('#toc-elements');
-
-      hTags.forEach((element, indexOfHTag) => {
+      hTags.forEach((hTag, indexOfHTag) => {
         let hTagItem;
 
         levelMap.forEach((level, key) => {
-          if (element.matches(`h${key}`)) {
-            hTagItem = createTagItemByLevel(level, element, indexOfHTag);
+          if (hTag.matches(`h${key}`)) {
+            hTagItem = createTagItemByLevel(level, hTag, indexOfHTag);
           }
         })
 
@@ -118,20 +122,21 @@ const TOC_CARD = (function () {
       });
     }
 
-    const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, element, indexOfHTag) {
-      const basicItem = createBasicItemBy(element);
+    const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, hTag, indexOfHTag) {
+      const basicItem = createBasicItemBy(hTag, indexOfHTag);
       appendScrollEventsOn(basicItem, indexOfHTag);
 
-      basicItem.classList.add(`toc-level${level}`);
+      basicItem.classList.add(`toc-level-${level}`);
 
       return basicItem;
     }
 
-    const createBasicItemBy = function (element) {
+    const createBasicItemBy = function (hTag, indexOfHTag) {
       const basicItem = document.createElement('a');
 
-      basicItem.innerHTML += element.innerText;
-      basicItem.classList = 'link-to-h-tag';
+      basicItem.innerHTML += hTag.innerText;
+      basicItem.id = `toc-${indexOfHTag}`;
+      basicItem.classList = 'toc-common';
 
       return basicItem;
     }
@@ -149,8 +154,45 @@ const TOC_CARD = (function () {
     }
 
     const giveIdToHTags = function () {
-      hTags.forEach((element, indexOfHTag) => {
-        element.id = generateIdOfHTag(indexOfHTag);
+      hTags.forEach((hTag, indexOfHTag) => {
+        hTag.id = generateIdOfHTag(indexOfHTag);
+      });
+    }
+
+    const markCurrentHTag = function () {
+      const currentHTag = findCurrentMainHTag();
+      const tocTag = findTocTagCorrespondingToHTag(currentHTag);
+
+      removeAllTocActiveClass();
+      tocTag.classList.add('toc-active');
+    }
+
+    const findCurrentMainHTag = function () {
+      const middleHeight = window.scrollY + (window.innerHeight / 2) - document.querySelector('.area_head').offsetHeight;
+
+      return Array.prototype.slice.call(hTags).reduce((pre, cur) => {
+        if (middleHeight < pre.offsetTop && middleHeight < cur.offsetTop) {
+          return pre;
+        }
+
+        if (pre.offsetTop < middleHeight && middleHeight <= cur.offsetTop) {
+          return pre;
+        }
+
+        return cur;
+      });
+    }
+
+    const findTocTagCorrespondingToHTag = function (currentHTag) {
+      const tokens = currentHTag.id.split('-');
+      const indexOfHTag = tokens[tokens.length - 1];
+
+      return document.querySelector(`#toc-${indexOfHTag}`);
+    }
+
+    const removeAllTocActiveClass = function () {
+      Array.prototype.slice.call(elementsCard.children).forEach(child => {
+        child.classList.remove('toc-active');
       });
     }
 
@@ -159,6 +201,7 @@ const TOC_CARD = (function () {
       getLevelsByHighestTag: getLevelsByHighestTag,
       registerTagsOnToc: registerTagsOnToc,
       giveIdToHTags: giveIdToHTags,
+      markCurrentHTag: markCurrentHTag,
     }
   };
 
@@ -168,9 +211,21 @@ const TOC_CARD = (function () {
     tocCardController.init();
   };
 
+  const onscroll = function () {
+    tocCardController.onscroll();
+  }
+
   return {
     init: init,
+    onscroll: onscroll,
   }
 })();
 
 TOC_CARD.init();
+
+/**
+ * scroll 시 현재 내용의 위치를 스크롤 이벤트를 통해 TOC에 표시해주기
+ */
+window.onscroll = function () {
+  TOC_CARD.onscroll();
+}

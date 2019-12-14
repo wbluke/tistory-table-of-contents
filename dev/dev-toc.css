@@ -2,7 +2,7 @@
 .toc-app {
   display: inline-block;
   position: fixed;
-  padding: 0.6rem 1.25rem 1.25rem 1.25rem;
+	padding: 0.6rem 1.25rem 1.25rem 1.25rem;
 }
 
 /* custom item style */
@@ -11,25 +11,30 @@
   overflow-y: scroll;
 }
 
-.toc-level1 {
+.toc-common {
+	display: block;
+	cursor: pointer;
+	color: darkgrey;
+}
+
+.toc-active, .toc-common:hover {
+	color: #008408;
+}
+
+.toc-level-1 {
   font-size: 0.9rem;
   margin-top: 0.5rem;
   font-weight: bold;
 }
 
-.toc-level2 {
+.toc-level-2 {
   font-size: 0.8rem;
 	margin-top: 0.3rem;
 	margin-left: 0.8rem;
 }
 
-.toc-level3 {
+.toc-level-3 {
   font-size: 0.75rem;
   margin-top: 0.3rem;
 	margin-left: 1.5rem;
-}
-
-.link-to-h-tag {
-	display: block;
-	cursor: pointer;
 }
