@@ -2,7 +2,7 @@
 .toc-app {
   display: inline-block;
   position: fixed;
-  padding: 10 20 20 20;
+  padding: 0.6rem 1.25rem 1.25rem 1.25rem;
 }
 
 /* custom item style */
@@ -12,19 +12,21 @@
 }
 
 .toc-level1 {
-  font-size: 15px;
-  margin-top: 8px;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
   font-weight: bold;
 }
 
 .toc-level2 {
-  font-size: 13px;
-  margin-top: 5px;
+  font-size: 0.8rem;
+	margin-top: 0.3rem;
+	margin-left: 0.8rem;
 }
 
 .toc-level3 {
-  font-size: 12px;
-  margin-top: 5px;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+	margin-left: 1.5rem;
 }
 
 .link-to-h-tag {

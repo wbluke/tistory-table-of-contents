@@ -20,15 +20,6 @@ const CONSTANTS = (function () {
     return new Map([[INDEX_OF_H3, LEVEL_1]])
   }
 
-  /* Level 별 들여쓰기 공백 개수 */
-  const BLANKS_OF_LEVEL_1 = 0;
-  const BLANKS_OF_LEVEL_2 = 4;
-  const BLANKS_OF_LEVEL_3 = 8;
-
-  const blanksByLevel = function () {
-    return new Map([[INDEX_OF_H1, BLANKS_OF_LEVEL_1], [INDEX_OF_H2, BLANKS_OF_LEVEL_2], [INDEX_OF_H3, BLANKS_OF_LEVEL_3]]);
-  }
-
   return {
     indexOfH1: INDEX_OF_H1,
     indexOfH2: INDEX_OF_H2,
@@ -36,7 +27,6 @@ const CONSTANTS = (function () {
     levelsByH1: levelsByH1(),
     levelsByH2: levelsByH2(),
     levelsByH3: levelsByH3(),
-    blanksByLevel: blanksByLevel(),
   }
 })();
 
@@ -130,9 +120,7 @@ const TOC_CARD = (function () {
 
     const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, element) {
       const basicItem = createBasicItemBy(element);
-      const blanks = generateBlanks(CONSTANTS.blanksByLevel.get(level));
 
-      basicItem.insertAdjacentHTML('afterbegin', blanks)
       basicItem.classList.add(`toc-level${level}`);
 
       return basicItem;
@@ -146,10 +134,6 @@ const TOC_CARD = (function () {
       basicItem.href = '#' + generateIdOfHTag(element);
 
       return basicItem;
-    }
-
-    const generateBlanks = function (repeat = 1) {
-      return '&nbsp;'.repeat(repeat);
     }
 
     const giveIdToHTags = function () {
