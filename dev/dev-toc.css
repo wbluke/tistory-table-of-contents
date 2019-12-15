@@ -17,10 +17,6 @@
 	color: darkgrey;
 }
 
-.toc-active, .toc-common:hover {
-	color: #008408;
-}
-
 .toc-level-1 {
   font-size: 0.9rem;
   margin-top: 0.5rem;
@@ -37,4 +33,12 @@
   font-size: 0.75rem;
   margin-top: 0.3rem;
 	margin-left: 1.5rem;
+}
+
+.toc-active, .toc-common:hover {
+	color: #008408;
+}
+
+.toc-parent-active {
+	color: #A1C7A0;
 }

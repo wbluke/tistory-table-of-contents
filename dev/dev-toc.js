@@ -182,21 +182,67 @@ const TOC_CARD = (function () {
     }
 
     const findTocTagCorrespondingToHTag = function (currentHTag) {
-      const tokens = currentHTag.id.split('-');
-      const indexOfHTag = tokens[tokens.length - 1];
+      const indexOfHTag = parseIndexOfTag(currentHTag);
 
       return document.querySelector(`#toc-${indexOfHTag}`);
     }
 
-    const markCurrentHTag = function (tocTag) {
-      removeAllTocActiveClass();
-      tocTag.classList.add('toc-active');
+    const parseIndexOfTag = function (hTag) {
+      const tokens = hTag.id.split('-');
+      return Number(tokens[tokens.length - 1]);
     }
 
-    const removeAllTocActiveClass = function () {
+    const markCurrentHTag = function (tocTag) {
+      removeAllClassOnTocTags('toc-active');
+      tocTag.classList.add('toc-active');
+      markParentHTagOf(tocTag);
+    }
+
+    const removeAllClassOnTocTags = function (className) {
       Array.prototype.slice.call(elementsCard.children).forEach(child => {
-        child.classList.remove('toc-active');
+        child.classList.remove(className);
       });
+    }
+
+    const markParentHTagOf = function (tocTag) {
+      const indexOfTocTag = parseIndexOfTag(tocTag);
+      const levelOfBaseTocTag = findLevelOfTocTag(tocTag);
+
+      removeAllClassOnTocTags('toc-parent-active');
+      compareLevelAndMark(levelOfBaseTocTag, indexOfTocTag);
+    }
+
+    /**
+     * 현재 active 태그의 부모 레벨 태그를 표시 
+     * 기준 태그(active 태그)애서 하나씩 위로 올라가면서 부모 태그를 탐색 (재귀)
+     * */
+    const compareLevelAndMark = function (levelOfBaseTocTag, indexOfCurrentTocTag) {
+      if (levelOfBaseTocTag <= 1 || indexOfCurrentTocTag < 0) {
+        return;
+      }
+
+      const currentTocTag = document.querySelector(`#toc-${indexOfCurrentTocTag}`);
+      const levelOfCurrentTocTag = findLevelOfTocTag(currentTocTag);
+
+      if (levelOfBaseTocTag <= levelOfCurrentTocTag) {
+        return compareLevelAndMark(levelOfBaseTocTag, indexOfCurrentTocTag - 1);
+      }
+
+      currentTocTag.classList.add('toc-parent-active')
+      compareLevelAndMark(levelOfBaseTocTag - 1, indexOfCurrentTocTag - 1);
+    }
+
+    const findLevelOfTocTag = function (tocTag) {
+      const classes = tocTag.classList;
+      if (classes.contains('toc-level-3')) {
+        return 3;
+      }
+
+      if (classes.contains('toc-level-2')) {
+        return 2;
+      }
+
+      return 1;
     }
 
     return {
