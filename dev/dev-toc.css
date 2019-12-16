@@ -8,7 +8,8 @@
 /* custom item style */
 .items {
 	/* TODO : DOM의 높이를 넘어가면 스크롤이 생길 수 있도록 */
-  overflow-y: scroll;
+	max-height: 70%;
+	overflow-y: scroll;
 }
 
 .toc-common {

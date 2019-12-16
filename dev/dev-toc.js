@@ -55,7 +55,9 @@ const TOC_CARD = (function () {
 
     const onscroll = function () {
       const tocTag = tocCardService.findCurrentHTag();
+
       tocCardService.markCurrentHTag(tocTag);
+      tocCardService.scrollToMainTocTag(tocTag);
     }
 
     return {
@@ -245,6 +247,17 @@ const TOC_CARD = (function () {
       return 1;
     }
 
+    /**
+     * TOC 항목이 너무 많아 TOC Card에 스크롤이 생길 경우, 
+     * 스크롤 이벤트에 따라 활성화된 TOC 태그가 보이도록 TOC Card의 스크롤도 함께 이동한다.
+     */
+    const scrollToMainTocTag = function (tocTag) {
+      elementsCard.scroll({
+        top: tocTag.offsetTop - (tocTag.offsetParent.offsetHeight * 0.3),
+        behavior: 'smooth'
+      });
+    }
+
     return {
       checkExistenceOfHTags: checkExistenceOfHTags,
       getLevelsByHighestTag: getLevelsByHighestTag,
@@ -252,6 +265,7 @@ const TOC_CARD = (function () {
       giveIdToHTags: giveIdToHTags,
       findCurrentHTag: findCurrentHTag,
       markCurrentHTag: markCurrentHTag,
+      scrollToMainTocTag: scrollToMainTocTag,
     }
   };
 

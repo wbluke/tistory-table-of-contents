@@ -536,6 +536,163 @@ execution(* *(..)) <span class="hljs-comment">// 모든 메소드 허용</span><
 <p>&nbsp;</p>
 <p>@Rollback은 메소드 레벨에서만 적용되기 때문에 모든 메소드에 해당 설정을 주려면 <code>@TransactionConfiguration(defaultRollback=false)</code>를 사용해야 한다. 이 애노테이션은 클래스 레벨에 부여할 수 있다.</p>
 <hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+
+
+<h1>테스트 h1 태그4</h1>
+<h2>트랜잭션 속성</h2>
+<h3>트랜잭션 전파</h3>
+<p>스프링의 트랜잭션 추상화를 설명하면서 그냥 넘어간 부분이 있다. 트랜잭션 매니저에서 트랜잭션을 가져올 때 사용한 DefaultTransactionDefinition 오브젝트다.</p>
+<pre class="aspectj"><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(MethodInvocation invocation)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
+    TransactionStatus status = <span class="hljs-keyword">this</span>.transactionManager.getTransaction(<span class="hljs-keyword">new</span> DefaultTransactionDefinition());
+    <span class="hljs-keyword">try</span> {
+        Object ret = invocation.proceed();
+        <span class="hljs-keyword">this</span>.transactionManager.commit(status);
+        <span class="hljs-keyword">return</span> ret;
+    } <span class="hljs-keyword">catch</span> (RuntimeException e) {
+        <span class="hljs-keyword">this</span>.transactionManager.rollback(status);
+        <span class="hljs-keyword">throw</span> e;
+    }
+}</code></pre>
+<p>트랜잭션을 가져올 때 파라미터로 트랜잭션 매니저에게 전달하는 DefaultTransactionDefinition의 용도가 무엇인지 알아보자. 트랜잭션이라고 모두 같은 방식으로 동작하는 것은 아니다. DefaultTransactionDefinition이 구현하고 있는 TransactionDefinition 인터페이스는 트랜잭션의 동작방식에 영향을 줄 수 있는 네 가지 속성을 정의하고 있다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;트랜잭션 전파</b></span></p>
+<p>트랜잭션 전파란 트랜잭션의 경계에서 <code>이미 진행 중인 트랜잭션이 있을 때 또는 없을 때 어떻게 동작할 것인가를 결정하는 방식</code>을 말한다. 트랜잭션 A가 진행되는 도중 트랜잭션 B가 시작되었을 때 어떻게 해줄 것인가에 대한 설정이다. 대표적으로 다음과 같은 트랜잭션 전파 속성을 줄 수 있다.</p>
+<pre class="haml"><code class="hljs diff"><span class="hljs-deletion">- PROPAGATION_REQUIRED : 진행 중인 트랜잭션이 없으면 새로 시작하고, 이미 시작된 트랜잭션이 있으면 이에 참여한다. 가장 많이 사용하고, DefaultTransactionDefinition도 이 속성을 사용한다.</span>
+<span class="hljs-deletion">- PROPAGATION_REQUIRES_NEW : 항상 새로운 트랜잭션을 시작한다.</span>
+<span class="hljs-deletion">- PROPAGATION_NOT_SUPPORTED : 트랜잭션 없이 동작하도록 만든다. 하나의 트랜잭션 내에 여러 메소드 중 특별한 메소드만 트랜잭션 적용에서 제외하려고 할 때 유용하게 쓸 수 있다.</span></code></pre>
+<p>트랜잭션 매니저를 통해 트랜잭션을 시작하려고 할 때 getTransaction()이라는 메소드를 사용하는 이유는 바로 이 트랜잭션 전파 속성이 있기 때문이다. 트랜잭션 전파 속성과 현재 진행 중인 트랜잭션이 존재하는지 여부에 따라서 새로운 트랜잭션을 시작할 수도 있고, 이미 진행 중인 트랜잭션에 참여하기만 할 수도 있다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;격리 수준</b></span></p>
+<p>모든 DB 트랜잭션은 격리수준을 갖고 있어야 한다. 서버환경에서는 여러 개의 트랜잭션이 동시에 진행될 수 있다. 가능하다면 모든 트랜잭션이 순차적으로 진행돼서 다른 트랜잭션의 작업에 독립적인 것이 좋겠지만, 그러자면 성능이 크게 떨어질 수밖에 없다. 따라서 적절하게 격리수준을 조정해서 <code>가능한 한 많은 트랜잭션을 동시에 진행시키면서도 문제가 발생하지 않게 하는 제어가 필요</code>하다. DefaultTransactionDefinition에 설정된 격리수준은 DataSource에 설정되어 있는 격리수준을 따른다는 뜻의 ISOLATION_DEFAULT다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;제한시간</b></span></p>
+<p>트랜잭션을 수행하는 제한시간(timeout)을 설정할 수 있다. DefaultTransactionDefinition의 기본 설정은 제한시간이 없는 것이다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;읽기전용</b></span></p>
+<p>읽기전용으로 설정해두면 트랜잭션 내에서 데이터를 조작하는 시도를 막아줄 수 있다. 또한 데이터 액세스 기술에 따라서 성능이 향상될 수도 있다.</p>
+<p>&nbsp;</p>
+<p>트랜잭션 정의를 수정하려면 어떻게 해야 할까? TransactionDefinition 오브젝트를 생성하고 사용하는 코드는 트랜잭션 경계설정 기능을 가진 TransactionAdvice다. DefaultTransactionDefinition을 사용하는 대신 외부에서 정의된 TransactionDefinition 오브젝트를 DI 받아서 사용하도록 만들면 된다. 하지만 이 방법으로 트랜잭션 속성을 변경하면 TransactionAdvice를 사용하는 모든 트랜잭션의 속성이 한꺼번에 바뀐다는 문제가 잇다. <code>원하는 메소드만 선택해서 독자적인 트랜잭션 정의를 적용할 수 있는 방법은 없을까?</code></p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>트랜잭션 인터셉터</h3>
+<p>메소드별로 다른 트랜잭션 정의를 적용하려면 어드바이스의 기능을 확장해야 한다. 스프링에는 편리하게 트랜잭션 경계설정 어드바이스로 사용할 수 있도록 만들어진 TransactionInterceptor가 존재한다. TransactionInterceptor 어드바이스의 동작방식은 기존의 TransactionAdvice와 크게 다르지 않고, 다만 트랜잭션 정의를 메소드 이름 패턴을 이용해서 다르게 지정할 수 있는 방법을 추가로 제공해줄 뿐이다.</p>
+<p>&nbsp;</p>
+<p>TransactionInterceptor의 두 번째 프로퍼티는 Properties 타입의 transactionAttributes인데, 트랜잭션 속성을 정의한 프로퍼티다. 트랜잭션 속성은 TransactionDefinition의 네 가지 기본 항목에 rollbackOn()이라는 메소드를 하나 더 갖고 있는 TransactionAttribute 인터페이스로 정의된다. rollbackOn()은 어떤 예외가 발생하면 롤백을 할 것인가를 결정하는 메소드다. 이 TransactionAttribute를 이용하면 트랜잭션 부가기능의 동작 방식을 모두 제어할 수 있다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>트랜잭션 애노테이션</h3>
+<p>포인트컷 표현식과 트랜잭션 속성을 이용해 트랜잭션을 일괄적으로 적용하는 방식은 대부분의 상황에 잘 들어맞는다. 그런데 가끔은 클래스나 메소드에 따라 각각 다른 트랜잭션 속성을 적용해야 하는 경우도 있다. 그런 경우를 위해 직접 타깃에 트랜잭션 속성정보를 가진 애노테이션을 지정하는 방법이 있다. <code>@Transactional</code> 애노테이션의 정의는 다음과 같다.</p>
+<pre class="java"><code class="hljs"><span class="hljs-keyword">package</span> org.springframework.transaction.annotation;
+
+<span class="hljs-meta">@Target</span>({ElementType.METHOD, ElementType.TYPE}) <span class="hljs-comment">// 애노테이션을 사용할 대상 지정. 메소드와 타입(클래스, 인터페이스)</span>
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME) <span class="hljs-comment">// 애노테이션 정보가 언제까지 유지되는지를 지정. 런타임 때도 애노테이션 정보를 리플렉션을 통해 얻을 수 있다.</span>
+<span class="hljs-meta">@Inherited</span> <span class="hljs-comment">// 상속을 통해서도 애노테이션 정보를 얻을 수 있게 한다.</span>
+<span class="hljs-meta">@Documented</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Transactional { <span class="hljs-comment">// 트랜잭션 속성의 모든 항목을 엘리먼트로 지정할 수 있다.</span>
+    <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> ""</span>;
+    <span class="hljs-function">Propagation <span class="hljs-title">propagation</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> Propagation.REQUIRED</span>;
+    <span class="hljs-function">Isolation <span class="hljs-title">isolation</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> Isolation.DEFAULT</span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">timeout</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> TransactionDefinition.TIMEOUT_DEFAULT</span>;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">readOnly</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">false</span></span>;
+    Class&lt;? extends Throwable&gt;[] rollbackFor() <span class="hljs-keyword">default</span> {};
+    String[] rollbackForClassName() <span class="hljs-keyword">default</span> {};
+    Class&lt;? extends Throwable&gt;[] noRollbackFor() <span class="hljs-keyword">default</span> {};
+    String[] noRollbackForClassName() <span class="hljs-keyword">default</span> {};
+}</code></pre>
+<p>스프링은 @Transactional을 적용할 때 4단계의 대체(fallback) 정책을 이용하게 해준다. 메소드의 속성을 확인할 때 <code>타깃 메소드, 타깃 클래스, 선언 메소드, 선언 타입(클래스, 인터페이스)의 순서에 따라서 @Transactional이 적용됐는지 차례로 확인하고, 가장 먼저 발견되는 속성정보를 사용하게 하는 방법</code>이다.</p>
+<p>&nbsp;</p>
+<p>다음과 같이 사용할 수 있다.</p>
+<pre class="java"><code class="hljs"><span class="hljs-meta">@Transactional</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserService</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(User user)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deleteAll</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(User user)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">upgradeLevels</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-meta">@Transactional</span>(readOnly=<span class="hljs-keyword">true</span>) <span class="hljs-comment">// 메소드 단위로 부여된 트랜잭션 속성이 타입 레벨에 부여된 것보다 우선한다.</span>
+    <span class="hljs-function">User <span class="hljs-title">get</span><span class="hljs-params">(String id)</span></span>;
+
+    <span class="hljs-meta">@Transactional</span>(readOnly=<span class="hljs-keyword">true</span>)
+    <span class="hljs-function">List&lt;User&gt; <span class="hljs-title">getAll</span><span class="hljs-params">()</span></span>;
+}</code></pre>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>테스트를 위한 트랜잭션 애노테이션</h3>
+<h1>테스트 h1 태그4</h1>
+<h2>트랜잭션 속성</h2>
+<h3>트랜잭션 전파</h3>
+<p>스프링의 트랜잭션 추상화를 설명하면서 그냥 넘어간 부분이 있다. 트랜잭션 매니저에서 트랜잭션을 가져올 때 사용한 DefaultTransactionDefinition 오브젝트다.</p>
+<pre class="aspectj"><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(MethodInvocation invocation)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
+    TransactionStatus status = <span class="hljs-keyword">this</span>.transactionManager.getTransaction(<span class="hljs-keyword">new</span> DefaultTransactionDefinition());
+    <span class="hljs-keyword">try</span> {
+        Object ret = invocation.proceed();
+        <span class="hljs-keyword">this</span>.transactionManager.commit(status);
+        <span class="hljs-keyword">return</span> ret;
+    } <span class="hljs-keyword">catch</span> (RuntimeException e) {
+        <span class="hljs-keyword">this</span>.transactionManager.rollback(status);
+        <span class="hljs-keyword">throw</span> e;
+    }
+}</code></pre>
+<p>트랜잭션을 가져올 때 파라미터로 트랜잭션 매니저에게 전달하는 DefaultTransactionDefinition의 용도가 무엇인지 알아보자. 트랜잭션이라고 모두 같은 방식으로 동작하는 것은 아니다. DefaultTransactionDefinition이 구현하고 있는 TransactionDefinition 인터페이스는 트랜잭션의 동작방식에 영향을 줄 수 있는 네 가지 속성을 정의하고 있다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;트랜잭션 전파</b></span></p>
+<p>트랜잭션 전파란 트랜잭션의 경계에서 <code>이미 진행 중인 트랜잭션이 있을 때 또는 없을 때 어떻게 동작할 것인가를 결정하는 방식</code>을 말한다. 트랜잭션 A가 진행되는 도중 트랜잭션 B가 시작되었을 때 어떻게 해줄 것인가에 대한 설정이다. 대표적으로 다음과 같은 트랜잭션 전파 속성을 줄 수 있다.</p>
+<pre class="haml"><code class="hljs diff"><span class="hljs-deletion">- PROPAGATION_REQUIRED : 진행 중인 트랜잭션이 없으면 새로 시작하고, 이미 시작된 트랜잭션이 있으면 이에 참여한다. 가장 많이 사용하고, DefaultTransactionDefinition도 이 속성을 사용한다.</span>
+<span class="hljs-deletion">- PROPAGATION_REQUIRES_NEW : 항상 새로운 트랜잭션을 시작한다.</span>
+<span class="hljs-deletion">- PROPAGATION_NOT_SUPPORTED : 트랜잭션 없이 동작하도록 만든다. 하나의 트랜잭션 내에 여러 메소드 중 특별한 메소드만 트랜잭션 적용에서 제외하려고 할 때 유용하게 쓸 수 있다.</span></code></pre>
+<p>트랜잭션 매니저를 통해 트랜잭션을 시작하려고 할 때 getTransaction()이라는 메소드를 사용하는 이유는 바로 이 트랜잭션 전파 속성이 있기 때문이다. 트랜잭션 전파 속성과 현재 진행 중인 트랜잭션이 존재하는지 여부에 따라서 새로운 트랜잭션을 시작할 수도 있고, 이미 진행 중인 트랜잭션에 참여하기만 할 수도 있다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;격리 수준</b></span></p>
+<p>모든 DB 트랜잭션은 격리수준을 갖고 있어야 한다. 서버환경에서는 여러 개의 트랜잭션이 동시에 진행될 수 있다. 가능하다면 모든 트랜잭션이 순차적으로 진행돼서 다른 트랜잭션의 작업에 독립적인 것이 좋겠지만, 그러자면 성능이 크게 떨어질 수밖에 없다. 따라서 적절하게 격리수준을 조정해서 <code>가능한 한 많은 트랜잭션을 동시에 진행시키면서도 문제가 발생하지 않게 하는 제어가 필요</code>하다. DefaultTransactionDefinition에 설정된 격리수준은 DataSource에 설정되어 있는 격리수준을 따른다는 뜻의 ISOLATION_DEFAULT다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;제한시간</b></span></p>
+<p>트랜잭션을 수행하는 제한시간(timeout)을 설정할 수 있다. DefaultTransactionDefinition의 기본 설정은 제한시간이 없는 것이다.</p>
+<p>&nbsp;</p>
+<p><span style="color: #1b711d;"><b>※&nbsp;읽기전용</b></span></p>
+<p>읽기전용으로 설정해두면 트랜잭션 내에서 데이터를 조작하는 시도를 막아줄 수 있다. 또한 데이터 액세스 기술에 따라서 성능이 향상될 수도 있다.</p>
+<p>&nbsp;</p>
+<p>트랜잭션 정의를 수정하려면 어떻게 해야 할까? TransactionDefinition 오브젝트를 생성하고 사용하는 코드는 트랜잭션 경계설정 기능을 가진 TransactionAdvice다. DefaultTransactionDefinition을 사용하는 대신 외부에서 정의된 TransactionDefinition 오브젝트를 DI 받아서 사용하도록 만들면 된다. 하지만 이 방법으로 트랜잭션 속성을 변경하면 TransactionAdvice를 사용하는 모든 트랜잭션의 속성이 한꺼번에 바뀐다는 문제가 잇다. <code>원하는 메소드만 선택해서 독자적인 트랜잭션 정의를 적용할 수 있는 방법은 없을까?</code></p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>트랜잭션 인터셉터</h3>
+<p>메소드별로 다른 트랜잭션 정의를 적용하려면 어드바이스의 기능을 확장해야 한다. 스프링에는 편리하게 트랜잭션 경계설정 어드바이스로 사용할 수 있도록 만들어진 TransactionInterceptor가 존재한다. TransactionInterceptor 어드바이스의 동작방식은 기존의 TransactionAdvice와 크게 다르지 않고, 다만 트랜잭션 정의를 메소드 이름 패턴을 이용해서 다르게 지정할 수 있는 방법을 추가로 제공해줄 뿐이다.</p>
+<p>&nbsp;</p>
+<p>TransactionInterceptor의 두 번째 프로퍼티는 Properties 타입의 transactionAttributes인데, 트랜잭션 속성을 정의한 프로퍼티다. 트랜잭션 속성은 TransactionDefinition의 네 가지 기본 항목에 rollbackOn()이라는 메소드를 하나 더 갖고 있는 TransactionAttribute 인터페이스로 정의된다. rollbackOn()은 어떤 예외가 발생하면 롤백을 할 것인가를 결정하는 메소드다. 이 TransactionAttribute를 이용하면 트랜잭션 부가기능의 동작 방식을 모두 제어할 수 있다.</p>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>트랜잭션 애노테이션</h3>
+<p>포인트컷 표현식과 트랜잭션 속성을 이용해 트랜잭션을 일괄적으로 적용하는 방식은 대부분의 상황에 잘 들어맞는다. 그런데 가끔은 클래스나 메소드에 따라 각각 다른 트랜잭션 속성을 적용해야 하는 경우도 있다. 그런 경우를 위해 직접 타깃에 트랜잭션 속성정보를 가진 애노테이션을 지정하는 방법이 있다. <code>@Transactional</code> 애노테이션의 정의는 다음과 같다.</p>
+<pre class="java"><code class="hljs"><span class="hljs-keyword">package</span> org.springframework.transaction.annotation;
+
+<span class="hljs-meta">@Target</span>({ElementType.METHOD, ElementType.TYPE}) <span class="hljs-comment">// 애노테이션을 사용할 대상 지정. 메소드와 타입(클래스, 인터페이스)</span>
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME) <span class="hljs-comment">// 애노테이션 정보가 언제까지 유지되는지를 지정. 런타임 때도 애노테이션 정보를 리플렉션을 통해 얻을 수 있다.</span>
+<span class="hljs-meta">@Inherited</span> <span class="hljs-comment">// 상속을 통해서도 애노테이션 정보를 얻을 수 있게 한다.</span>
+<span class="hljs-meta">@Documented</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Transactional { <span class="hljs-comment">// 트랜잭션 속성의 모든 항목을 엘리먼트로 지정할 수 있다.</span>
+    <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> ""</span>;
+    <span class="hljs-function">Propagation <span class="hljs-title">propagation</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> Propagation.REQUIRED</span>;
+    <span class="hljs-function">Isolation <span class="hljs-title">isolation</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> Isolation.DEFAULT</span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">timeout</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> TransactionDefinition.TIMEOUT_DEFAULT</span>;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">readOnly</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">false</span></span>;
+    Class&lt;? extends Throwable&gt;[] rollbackFor() <span class="hljs-keyword">default</span> {};
+    String[] rollbackForClassName() <span class="hljs-keyword">default</span> {};
+    Class&lt;? extends Throwable&gt;[] noRollbackFor() <span class="hljs-keyword">default</span> {};
+    String[] noRollbackForClassName() <span class="hljs-keyword">default</span> {};
+}</code></pre>
+<p>스프링은 @Transactional을 적용할 때 4단계의 대체(fallback) 정책을 이용하게 해준다. 메소드의 속성을 확인할 때 <code>타깃 메소드, 타깃 클래스, 선언 메소드, 선언 타입(클래스, 인터페이스)의 순서에 따라서 @Transactional이 적용됐는지 차례로 확인하고, 가장 먼저 발견되는 속성정보를 사용하게 하는 방법</code>이다.</p>
+<p>&nbsp;</p>
+<p>다음과 같이 사용할 수 있다.</p>
+<pre class="java"><code class="hljs"><span class="hljs-meta">@Transactional</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserService</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(User user)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deleteAll</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(User user)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">upgradeLevels</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-meta">@Transactional</span>(readOnly=<span class="hljs-keyword">true</span>) <span class="hljs-comment">// 메소드 단위로 부여된 트랜잭션 속성이 타입 레벨에 부여된 것보다 우선한다.</span>
+    <span class="hljs-function">User <span class="hljs-title">get</span><span class="hljs-params">(String id)</span></span>;
+
+    <span class="hljs-meta">@Transactional</span>(readOnly=<span class="hljs-keyword">true</span>)
+    <span class="hljs-function">List&lt;User&gt; <span class="hljs-title">getAll</span><span class="hljs-params">()</span></span>;
+}</code></pre>
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
+<h3>테스트를 위한 트랜잭션 애노테이션</h3>
+
 <h3>참고</h3>
 <p><a href="http://acornpub.co.kr/book/toby-spring3.1-vol1">http://acornpub.co.kr/book/toby-spring3.1-vol1</a></p>
 <figure id="og_1572178475431" contenteditable="false" data-ke-type="opengraph" data-og-type="book" data-og-title="토비의 스프링 3.1 Vol. 1 스프링의 이해와 원리" data-og-description="스프링의 핵심 프로그래밍 모델의 원리와 이에 적용된 다양한 디자인 패턴, 프로그래밍 기법의 이해를 돕는 책" data-og-host="www.acornpub.co.kr" data-og-source-url="http://acornpub.co.kr/book/toby-spring3.1-vol1" data-og-url="http://www.acornpub.co.kr/book/toby-spring3.1-vol1" data-og-image="https://scrap.kakaocdn.net/dn/tSF55/hyDqiuXbBd/gMBkkqSd9aj0QuYOQWrlzk/img.jpg?width=458&amp;height=621&amp;face=0_0_458_621,https://scrap.kakaocdn.net/dn/5DesY/hyDqnC1nRA/ZOH9vFpLyClsf8AikKkEu0/img.png?width=258&amp;height=350&amp;face=0_0_258_350"><a href="http://www.acornpub.co.kr/book/toby-spring3.1-vol1" target="_blank" rel="noopener" data-source-url="http://acornpub.co.kr/book/toby-spring3.1-vol1">
