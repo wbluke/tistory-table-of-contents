@@ -42,3 +42,9 @@
 .toc-parent-active {
 	color: #A1C7A0;
 }
+
+@media (max-width: 83.75rem) {
+	.toc-app {
+		visibility: hidden;
+	}
+}
