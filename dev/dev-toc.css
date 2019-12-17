@@ -1,14 +1,30 @@
 /* custom card style */
-.toc-app {
-  display: inline-block;
-  position: fixed;
+.toc-app-common {
+	display: inline-block;
 	padding: 0.6rem 1.25rem 1.25rem 1.25rem;
+}
+
+.toc-app-top {
+	position: absolute;
+	margin-top: 14.4rem;
+	height: 70%;
+}
+
+.toc-app-middle {
+	position: fixed;
+}
+
+.toc-app-bottom {
+	position: absolute;
+	margin-bottom: 24.4rem;
+	height: 70%;
+	bottom: 0rem;
 }
 
 /* custom item style */
 .items {
-	/* TODO : DOM의 높이를 넘어가면 스크롤이 생길 수 있도록 */
-	max-height: 70%;
+	max-height: 70vh;
+	width: 15.3rem;
 	overflow-y: scroll;
 }
 
@@ -45,7 +61,7 @@
 }
 
 @media (max-width: 83.75rem) {
-	.toc-app {
+	.toc-app-common {
 		visibility: hidden;
 	}
 }

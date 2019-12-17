@@ -35,19 +35,27 @@ const TOC_CARD = (function () {
 
     const tocCardService = new TocCardService();
 
-    const registerHTagsOnTocCard = function () {
-      const levelMap = tocCardService.getLevelsByHighestTag();
-
-      tocCardService.registerTagsOnToc(levelMap);
+    const initTocElementsCard = function () {
+      tocCardService.initTocElementsCard();
     }
 
     const giveIdToHTags = function () {
       tocCardService.giveIdToHTags();
     }
 
+    const registerHTagsOnTocCard = function () {
+      const levelMap = tocCardService.getLevelsByHighestTag();
+
+      tocCardService.registerTagsOnToc(levelMap);
+    }
+
     const init = function () {
+
+      // todo : toc-app 에 class 추가
+
       const existsHTags = tocCardService.checkExistenceOfHTags();
       if (existsHTags) {
+        initTocElementsCard();
         giveIdToHTags();
         registerHTagsOnTocCard();
       }
@@ -58,6 +66,7 @@ const TOC_CARD = (function () {
 
       tocCardService.markCurrentHTag(tocTag);
       tocCardService.scrollToMainTocTag(tocTag);
+      tocCardService.detectTocCardPosition();
     }
 
     return {
@@ -67,13 +76,17 @@ const TOC_CARD = (function () {
   };
 
   const TocCardService = function () {
-    const elementsCard = document.querySelector('#toc-elements');
+    const tocElementsCard = document.querySelector('#toc-elements');
     const mainContents = document.querySelector('.area_view');
     const hTags = mainContents.querySelectorAll('h1, h2, h3');
 
     /* h1, h2, h3 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
       return hTags.length != 0;
+    }
+
+    const initTocElementsCard = function () {
+      tocElementsCard.classList.add('toc-app-common', 'items', 'toc-app-top');
     }
 
     /** 최상위 태그에 따른 레벨 Map 받아오기
@@ -121,7 +134,7 @@ const TOC_CARD = (function () {
           }
         })
 
-        elementsCard.appendChild(hTagItem);
+        tocElementsCard.appendChild(hTagItem);
       });
     }
 
@@ -201,7 +214,7 @@ const TOC_CARD = (function () {
     }
 
     const removeAllClassOnTocTags = function (className) {
-      Array.prototype.slice.call(elementsCard.children).forEach(child => {
+      Array.prototype.slice.call(tocElementsCard.children).forEach(child => {
         child.classList.remove(className);
       });
     }
@@ -252,20 +265,45 @@ const TOC_CARD = (function () {
      * 스크롤 이벤트에 따라 활성화된 TOC 태그가 보이도록 TOC Card의 스크롤도 함께 이동한다.
      */
     const scrollToMainTocTag = function (tocTag) {
-      elementsCard.scroll({
+      tocElementsCard.scroll({
         top: tocTag.offsetTop - (tocTag.offsetParent.offsetHeight * 0.3),
         behavior: 'smooth'
       });
     }
 
+    const detectTocCardPosition = function () {
+      const currentScrollTop = document.body.scrollTop;
+      const titleElement = document.querySelector('.area_title');
+      const titleBottom = titleElement.offsetTop + titleElement.offsetHeight;
+
+      const footer = document.querySelector('#mEtc');
+      const footerTop = footer.offsetTop;
+      const elementsCardBottom = currentScrollTop + tocElementsCard.offsetHeight;
+
+      tocElementsCard.classList.remove('toc-app-top', 'toc-app-middle', 'toc-app-bottom');
+
+      if (currentScrollTop < titleBottom) {
+        tocElementsCard.classList.add('toc-app-top');
+        return;
+      }
+      if (elementsCardBottom >= footerTop) {
+        tocElementsCard.classList.add('toc-app-bottom');
+        return;
+      }
+
+      tocElementsCard.classList.add('toc-app-middle');
+    }
+
     return {
       checkExistenceOfHTags: checkExistenceOfHTags,
+      initTocElementsCard: initTocElementsCard,
       getLevelsByHighestTag: getLevelsByHighestTag,
       registerTagsOnToc: registerTagsOnToc,
       giveIdToHTags: giveIdToHTags,
       findCurrentHTag: findCurrentHTag,
       markCurrentHTag: markCurrentHTag,
       scrollToMainTocTag: scrollToMainTocTag,
+      detectTocCardPosition: detectTocCardPosition
     }
   };
 
