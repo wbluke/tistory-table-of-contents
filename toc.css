@@ -23,7 +23,7 @@
 
 /* custom item style */
 .items {
-	max-height: 70vh;
+	height: 70vh;
 	width: 15.3rem;
 	overflow-y: scroll;
 }
