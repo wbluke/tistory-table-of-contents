@@ -1,55 +1,67 @@
 /* custom card style */
-.toc-app {
-  display: inline-block;
-  position: fixed;
+.toc-app-common {
+	display: inline-block;
+	padding: 0.6rem 1.25rem 1.25rem 1.25rem;
 }
 
-.box-card {
-  width: 250px;
-  margin: 40 10px;
-  max-height: 520px;
+.toc-app-top {
+	position: absolute;
+	margin-top: 14.4rem;
+	height: 70%;
 }
 
-/* custom title style */
-.icon-align {
-  vertical-align: bottom;
+.toc-app-middle {
+	position: fixed;
 }
 
-/* defualt item style */
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 10px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-   clear: both
+.toc-app-bottom {
+	position: absolute;
+	margin-bottom: 24.4rem;
+	height: 70%;
+	bottom: 0rem;
 }
 
 /* custom item style */
 .items {
-  max-height: 434px;
-  overflow-y: scroll;
+	max-height: 70vh;
+	width: 15.3rem;
+	overflow-y: scroll;
 }
 
-.toc-level1 {
-  font-size: 14px;
-  margin-bottom: 10px;
+.toc-common {
+	display: block;
+	cursor: pointer;
+	color: darkgrey;
 }
 
-.toc-level2 {
-  font-size: 13px;
-  margin-bottom: 8px;
+.toc-level-1 {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
 }
 
-.toc-level3 {
-  font-size: 12px;
-  margin-bottom: 8px;
+.toc-level-2 {
+  font-size: 0.8rem;
+	margin-top: 0.3rem;
+	margin-left: 0.8rem;
+}
+
+.toc-level-3 {
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+	margin-left: 1.5rem;
+}
+
+.toc-active, .toc-common:hover {
+	color: #008408;
+}
+
+.toc-parent-active {
+	color: #A1C7A0;
+}
+
+@media (max-width: 83.75rem) {
+	.toc-app-common {
+		visibility: hidden;
+	}
 }
