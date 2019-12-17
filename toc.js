@@ -272,7 +272,7 @@ const TOC_CARD = (function () {
     }
 
     const detectTocCardPosition = function () {
-      const currentScrollTop = document.body.scrollTop;
+      const currentScrollTop = document.documentElement.scrollTop;
       const titleElement = document.querySelector('.area_title');
       const titleBottom = titleElement.offsetTop + titleElement.offsetHeight;
 
