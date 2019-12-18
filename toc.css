@@ -26,6 +26,11 @@
 	height: 70vh;
 	width: 15.3rem;
 	overflow-y: scroll;
+	-ms-overflow-style: none;
+}
+
+.items::-webkit-scrollbar {
+    display: none !important;
 }
 
 .toc-common {
