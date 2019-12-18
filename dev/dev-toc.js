@@ -50,9 +50,6 @@ const TOC_CARD = (function () {
     }
 
     const init = function () {
-
-      // todo : toc-app 에 class 추가
-
       const existsHTags = tocCardService.checkExistenceOfHTags();
       if (existsHTags) {
         initTocElementsCard();
@@ -77,11 +74,16 @@ const TOC_CARD = (function () {
 
   const TocCardService = function () {
     const tocElementsCard = document.querySelector('#toc-elements');
-    const mainContents = document.querySelector('.area_view');
-    const hTags = mainContents.querySelectorAll('h1, h2, h3');
+    let hTags;
 
     /* h1, h2, h3 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
+      const mainContents = document.querySelector('.area_view');
+      if (mainContents == null) {
+        return false;
+      }
+
+      hTags = mainContents.querySelectorAll('h1, h2, h3');
       return hTags.length != 0;
     }
 
