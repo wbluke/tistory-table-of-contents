@@ -1,6 +1,10 @@
 # tistory-table-of-contents
 티스토리 [#1] 스킨전용 TOC
 
+## 적용한 블로그 글 & TOC 구현기
+
+https://www.wbluke.com/21
+
 ## 적용 방법
 
 1. 해당 저장소에서 `toc.css`와 `toc.js`파일을 다운로드 받습니다.
