@@ -4,21 +4,12 @@
 	padding: 0.6rem 1.25rem 1.25rem 1.25rem;
 }
 
-.toc-app-top {
-	position: absolute;
-	margin-top: 14.4rem;
-	height: 70%;
-}
-
-.toc-app-middle {
+.toc-app-basic {
 	position: fixed;
 }
 
 .toc-app-bottom {
 	position: absolute;
-	margin-bottom: 24.4rem;
-	height: 70%;
-	bottom: 0rem;
 }
 
 /* custom item style */
