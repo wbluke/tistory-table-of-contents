@@ -1,6 +1,10 @@
 # tistory-table-of-contents
 티스토리 [#1] 스킨전용 TOC
 
+이 저장소는 티스토리의 `#1`이라는 이름의 스킨을 기준으로 만들어진 TOC(Table Of Contents)입니다.  
+스킨이 다른 경우는 각 스킨에 맞추어 세부 설정들을 수정해야 할 수 있습니다. (티스토리의 각 스킨마다 클래스 이름이나 DOM 구조가 다르기 때문에 범용적인 적용에 한계가 있습니다ㅠ.ㅠ)  
+아래 블로그 글에서 적용한 모습과 구현한 방법들을 읽어보실 수 있습니다 :)
+
 ## 적용한 블로그 글 & TOC 구현기
 
 https://www.wbluke.com/21
@@ -8,25 +12,35 @@ https://www.wbluke.com/21
 ## 적용 방법
 
 1. 해당 저장소에서 `toc.css`와 `toc.js`파일을 다운로드 받습니다.
-2. 티스토리의 **스킨 편집** 메뉴로 들어가서, **파일 업로드**에 해당 파일들을 업로드 합니다.
+2. `toc.js` 파일을 열어 가장 상단에 있는 `CLASS_OF_MAIN_CONTENTS`에 메인 컨텐츠가 포함된 클래스를 찾아 넣어 줍니다.
+제 스킨을 기준으로 한 기본값은 `.area_view`입니다.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/44018338/71405005-78ed4200-2677-11ea-9279-7253e601ed53.png" alt="file upload" width="900"/>
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/44018338/71405185-09c41d80-2678-11ea-9bd7-322d951f21da.png" alt="file upload" width="500"/>
+</p>
+
+3. 티스토리의 **스킨 편집** 메뉴로 들어가서, **파일 업로드**에 해당 파일들을 업로드 합니다.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/44018338/71231068-96e13c80-232f-11ea-83af-b8c622ca3b24.png" alt="file upload" width="500"/>
 </p>
 
-3. HTML 소스에서 id가 **cMain**인 태그를 찾아 바로 밑에 다음과 같이 `<div id="toc-elements"></div>`를 추가합니다.
+4. HTML 소스에서 id가 **cMain**인 태그를 찾아 바로 밑에 다음과 같이 `<div id="toc-elements"></div>`를 추가합니다.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/44018338/71232097-e1fd4e80-2333-11ea-9526-815a3fae69cb.png" alt="main setting" width="500"/>
 </p>
 
-4. HTML 소스 상단에 다음과 같이 css 태그를 추가합니다.
+5. HTML 소스 상단에 다음과 같이 css 태그를 추가합니다.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/44018338/71231980-774c1300-2333-11ea-803f-e61c43cc1a80.png" alt="css setting" width="500"/>
 </p>
 
-5. HTML 소스 가장 하단에 다음과 같이 js 태그를 추가합니다. 다른 `script` 태그들보다 아래에 있어야 합니다.
+6. HTML 소스 가장 하단에 다음과 같이 js 태그를 추가합니다. 다른 `script` 태그들보다 아래에 있어야 합니다.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/44018338/71232347-f68e1680-2334-11ea-9e1e-fd0ea5035d0d.png" alt="js setting" width="500"/>
