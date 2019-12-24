@@ -1,3 +1,5 @@
+const CLASS_OF_MAIN_CONTENTS = '.area_view';
+
 const CONSTANTS = (function () {
   const KEY_OF_H1 = 1;
   const KEY_OF_H2 = 2;
@@ -78,7 +80,7 @@ const TOC_CARD = (function () {
 
     /* h1, h2, h3 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
-      const mainContents = document.querySelector('.area_view');
+      const mainContents = document.querySelector(CLASS_OF_MAIN_CONTENTS);
       if (mainContents == null) {
         return false;
       }
@@ -88,7 +90,7 @@ const TOC_CARD = (function () {
     }
 
     const initTocElementsCard = function () {
-      tocElementsCard.classList.add('toc-app-common', 'items', 'toc-app-top');
+      tocElementsCard.classList.add('toc-app-common', 'items', 'toc-app-basic');
     }
 
     /** 최상위 태그에 따른 레벨 Map 받아오기
@@ -183,7 +185,9 @@ const TOC_CARD = (function () {
     }
 
     const findCurrentMainHTag = function () {
-      const middleHeight = window.scrollY + (window.innerHeight / 2) - document.querySelector('.area_head').offsetHeight;
+      const headArea = document.querySelector('.area_head');
+      const headAreaHeight = headArea != null ? headArea.offsetHeight : 0;
+      const middleHeight = window.scrollY + (window.innerHeight / 2) - headAreaHeight;
 
       return Array.prototype.slice.call(hTags).reduce((pre, cur) => {
         if (middleHeight < pre.offsetTop && middleHeight < cur.offsetTop) {
@@ -275,25 +279,19 @@ const TOC_CARD = (function () {
 
     const detectTocCardPosition = function () {
       const currentScrollTop = document.documentElement.scrollTop;
-      const titleElement = document.querySelector('.area_title');
-      const titleBottom = titleElement.offsetTop + titleElement.offsetHeight;
 
       const footer = document.querySelector('#mEtc');
-      const footerTop = footer.offsetTop;
+      const footerTop = footer != null ? footer.offsetTop : Number.MAX_VALUE;
       const elementsCardBottom = currentScrollTop + tocElementsCard.offsetHeight;
 
-      tocElementsCard.classList.remove('toc-app-top', 'toc-app-middle', 'toc-app-bottom');
+      tocElementsCard.classList.remove('toc-app-basic', 'toc-app-bottom');
 
-      if (currentScrollTop < titleBottom) {
-        tocElementsCard.classList.add('toc-app-top');
-        return;
-      }
       if (elementsCardBottom >= footerTop) {
         tocElementsCard.classList.add('toc-app-bottom');
         return;
       }
 
-      tocElementsCard.classList.add('toc-app-middle');
+      tocElementsCard.classList.add('toc-app-basic');
     }
 
     return {
