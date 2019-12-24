@@ -88,7 +88,7 @@ const TOC_CARD = (function () {
     }
 
     const initTocElementsCard = function () {
-      tocElementsCard.classList.add('toc-app-common', 'items', 'toc-app-top');
+      tocElementsCard.classList.add('toc-app-common', 'items', 'toc-app-basic');
     }
 
     /** 최상위 태그에 따른 레벨 Map 받아오기
@@ -275,25 +275,19 @@ const TOC_CARD = (function () {
 
     const detectTocCardPosition = function () {
       const currentScrollTop = document.documentElement.scrollTop;
-      const titleElement = document.querySelector('.area_title');
-      const titleBottom = titleElement.offsetTop + titleElement.offsetHeight;
 
       const footer = document.querySelector('#mEtc');
       const footerTop = footer.offsetTop;
       const elementsCardBottom = currentScrollTop + tocElementsCard.offsetHeight;
 
-      tocElementsCard.classList.remove('toc-app-top', 'toc-app-middle', 'toc-app-bottom');
+      tocElementsCard.classList.remove('toc-app-basic', 'toc-app-bottom');
 
-      if (currentScrollTop < titleBottom) {
-        tocElementsCard.classList.add('toc-app-top');
-        return;
-      }
       if (elementsCardBottom >= footerTop) {
         tocElementsCard.classList.add('toc-app-bottom');
         return;
       }
 
-      tocElementsCard.classList.add('toc-app-middle');
+      tocElementsCard.classList.add('toc-app-basic');
     }
 
     return {
