@@ -76,7 +76,7 @@ const TOC_CARD = (function () {
 
   const TocCardService = function () {
     const tocElementsCard = document.querySelector('#toc-elements');
-    let hTags;
+    let hTags = mainContents.querySelectorAll('h1, h2, h3');
 
     /* h1, h2, h3 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
@@ -85,7 +85,6 @@ const TOC_CARD = (function () {
         return false;
       }
 
-      hTags = mainContents.querySelectorAll('h1, h2, h3');
       return hTags.length != 0;
     }
 
@@ -107,19 +106,17 @@ const TOC_CARD = (function () {
         'H2': CONSTANTS.levelsByH2,
       };
 
-      return levelMap[findHighestHTagName()] || CONSTANTS.levelsByH3;
+      return levelMap[findHighestHTag().tagName] || CONSTANTS.levelsByH3;
     }
 
     /* 최상위 태그 판별 작업 */
-    const findHighestHTagName = function () {
-      const highestTag = Array.prototype.slice.call(hTags).reduce((pre, cur) => {
-        const tagNumOfPre = Number(pre.tagName.slice(-1));
-        const tagNumOfCur = Number(cur.tagName.slice(-1));
+    const findHighestHTag = function () {
+      return [...hTags].reduce((pre, cur) => {
+        const tagNumOfPre = parseInt(pre.tagName[1]);
+        const tagNumOfCur = parseInt(cur.tagName[1]);
 
         return (tagNumOfPre < tagNumOfCur) ? pre : cur;
       });
-
-      return highestTag.tagName;
     }
 
     /* TOC에 태그 삽입 */
