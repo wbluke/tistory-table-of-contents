@@ -203,7 +203,7 @@ const TOC_CARD = (function () {
 
     const parseIndexOfTag = function (hTag) {
       const tokens = hTag.id.split('-');
-      return Number(tokens[tokens.length - 1]);
+      return parseInt(tokens[tokens.length - 1]);
     }
 
     const markCurrentHTag = function (tocTag) {
@@ -274,7 +274,7 @@ const TOC_CARD = (function () {
       const currentScrollTop = document.documentElement.scrollTop;
 
       const footer = document.querySelector('#mEtc');
-      const footerTop = footer !== undefined ? footer.offsetTop : Number.MAX_VALUE;
+      const footerTop = footer !== undefined ? footer.offsetTop : Number.MAX_SAFE_INTEGER;
       const elementsCardBottom = currentScrollTop + tocElementsCard.offsetHeight;
 
       tocElementsCard.classList.remove('toc-app-basic', 'toc-app-bottom');
