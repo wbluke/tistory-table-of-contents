@@ -69,8 +69,8 @@ const TOC_CARD = (function () {
     }
 
     return {
-      init: init,
-      onscroll: onscroll,
+      init,
+      onscroll,
     };
   };
 
@@ -295,15 +295,15 @@ const TOC_CARD = (function () {
     }
 
     return {
-      checkExistenceOfHTags: checkExistenceOfHTags,
-      initTocElementsCard: initTocElementsCard,
-      getLevelsByHighestTag: getLevelsByHighestTag,
-      registerTagsOnToc: registerTagsOnToc,
-      giveIdToHTags: giveIdToHTags,
-      findCurrentHTag: findCurrentHTag,
-      markCurrentHTag: markCurrentHTag,
-      scrollToMainTocTag: scrollToMainTocTag,
-      detectTocCardPosition: detectTocCardPosition
+      checkExistenceOfHTags,
+      initTocElementsCard,
+      getLevelsByHighestTag,
+      registerTagsOnToc,
+      giveIdToHTags,
+      findCurrentHTag,
+      markCurrentHTag,
+      scrollToMainTocTag,
+      detectTocCardPosition
     }
   };
 
@@ -318,8 +318,8 @@ const TOC_CARD = (function () {
   }
 
   return {
-    init: init,
-    onscroll: onscroll,
+    init,
+    onscroll,
   }
 })();
 
