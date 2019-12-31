@@ -69,24 +69,24 @@ const TOC_CARD = (function () {
     }
 
     return {
-      init: init,
-      onscroll: onscroll,
+      init,
+      onscroll,
     };
   };
 
   const TocCardService = function () {
     const tocElementsCard = document.querySelector('#toc-elements');
-    let hTags;
+
+    const mainContents = document.querySelector(CLASS_OF_MAIN_CONTENTS);
+    const hTags = mainContents.querySelectorAll('h1, h2, h3');
 
     /* h1, h2, h3 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
-      const mainContents = document.querySelector(CLASS_OF_MAIN_CONTENTS);
-      if (mainContents == null) {
+      if (mainContents === undefined) {
         return false;
       }
 
-      hTags = mainContents.querySelectorAll('h1, h2, h3');
-      return hTags.length != 0;
+      return hTags.length !== 0;
     }
 
     const initTocElementsCard = function () {
@@ -102,29 +102,22 @@ const TOC_CARD = (function () {
      * 부여된 Level에 따라 적용되는 CSS가 달라진다.
      * */
     const getLevelsByHighestTag = function () {
-      const highestHTagName = findHighestHTagName();
+      const levelMapByHighestTag = {
+        'H1': CONSTANTS.levelsByH1,
+        'H2': CONSTANTS.levelsByH2,
+      };
 
-      if ('H1'.match(highestHTagName)) {
-        return CONSTANTS.levelsByH1;
-      }
-
-      if ('H2'.match(highestHTagName)) {
-        return CONSTANTS.levelsByH2;
-      }
-
-      return CONSTANTS.levelsByH3;
+      return levelMapByHighestTag[findHighestHTag().tagName] || CONSTANTS.levelsByH3;
     }
 
     /* 최상위 태그 판별 작업 */
-    const findHighestHTagName = function () {
-      const highestTag = Array.prototype.slice.call(hTags).reduce((pre, cur) => {
-        const tagNumOfPre = Number(pre.tagName.slice(-1));
-        const tagNumOfCur = Number(cur.tagName.slice(-1));
+    const findHighestHTag = function () {
+      return [...hTags].reduce((pre, cur) => {
+        const tagNumOfPre = parseInt(pre.tagName[1]);
+        const tagNumOfCur = parseInt(cur.tagName[1]);
 
         return (tagNumOfPre < tagNumOfCur) ? pre : cur;
       });
-
-      return highestTag.tagName;
     }
 
     /* TOC에 태그 삽입 */
@@ -186,10 +179,10 @@ const TOC_CARD = (function () {
 
     const findCurrentMainHTag = function () {
       const headArea = document.querySelector('.area_head');
-      const headAreaHeight = headArea != null ? headArea.offsetHeight : 0;
+      const headAreaHeight = headArea !== undefined ? headArea.offsetHeight : 0;
       const middleHeight = window.scrollY + (window.innerHeight / 2) - headAreaHeight;
 
-      return Array.prototype.slice.call(hTags).reduce((pre, cur) => {
+      return [...hTags].reduce((pre, cur) => {
         if (middleHeight < pre.offsetTop && middleHeight < cur.offsetTop) {
           return pre;
         }
@@ -210,7 +203,7 @@ const TOC_CARD = (function () {
 
     const parseIndexOfTag = function (hTag) {
       const tokens = hTag.id.split('-');
-      return Number(tokens[tokens.length - 1]);
+      return parseInt(tokens[tokens.length - 1]);
     }
 
     const markCurrentHTag = function (tocTag) {
@@ -281,7 +274,7 @@ const TOC_CARD = (function () {
       const currentScrollTop = document.documentElement.scrollTop;
 
       const footer = document.querySelector('#mEtc');
-      const footerTop = footer != null ? footer.offsetTop : Number.MAX_VALUE;
+      const footerTop = footer !== undefined ? footer.offsetTop : Number.MAX_SAFE_INTEGER;
       const elementsCardBottom = currentScrollTop + tocElementsCard.offsetHeight;
 
       tocElementsCard.classList.remove('toc-app-basic', 'toc-app-bottom');
@@ -295,15 +288,15 @@ const TOC_CARD = (function () {
     }
 
     return {
-      checkExistenceOfHTags: checkExistenceOfHTags,
-      initTocElementsCard: initTocElementsCard,
-      getLevelsByHighestTag: getLevelsByHighestTag,
-      registerTagsOnToc: registerTagsOnToc,
-      giveIdToHTags: giveIdToHTags,
-      findCurrentHTag: findCurrentHTag,
-      markCurrentHTag: markCurrentHTag,
-      scrollToMainTocTag: scrollToMainTocTag,
-      detectTocCardPosition: detectTocCardPosition
+      checkExistenceOfHTags,
+      initTocElementsCard,
+      getLevelsByHighestTag,
+      registerTagsOnToc,
+      giveIdToHTags,
+      findCurrentHTag,
+      markCurrentHTag,
+      scrollToMainTocTag,
+      detectTocCardPosition
     }
   };
 
@@ -318,8 +311,8 @@ const TOC_CARD = (function () {
   }
 
   return {
-    init: init,
-    onscroll: onscroll,
+    init,
+    onscroll,
   }
 })();
 
