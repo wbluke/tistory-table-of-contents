@@ -102,12 +102,12 @@ const TOC_CARD = (function () {
      * 부여된 Level에 따라 적용되는 CSS가 달라진다.
      * */
     const getLevelsByHighestTag = function () {
-      const levelMap = {
+      const levelMapByHighestTag = {
         'H1': CONSTANTS.levelsByH1,
         'H2': CONSTANTS.levelsByH2,
       };
 
-      return levelMap[findHighestHTag().tagName] || CONSTANTS.levelsByH3;
+      return levelMapByHighestTag[findHighestHTag().tagName] || CONSTANTS.levelsByH3;
     }
 
     /* 최상위 태그 판별 작업 */
