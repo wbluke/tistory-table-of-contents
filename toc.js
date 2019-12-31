@@ -76,12 +76,12 @@ const TOC_CARD = (function () {
 
   const TocCardService = function () {
     const tocElementsCard = document.querySelector('#toc-elements');
-    let hTags = mainContents.querySelectorAll('h1, h2, h3');
+
+    const mainContents = document.querySelector(CLASS_OF_MAIN_CONTENTS);
+    const hTags = mainContents.querySelectorAll('h1, h2, h3');
 
     /* h1, h2, h3 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
-      const mainContents = document.querySelector(CLASS_OF_MAIN_CONTENTS);
-
       if (mainContents === undefined) {
         return false;
       }
@@ -182,7 +182,7 @@ const TOC_CARD = (function () {
       const headAreaHeight = headArea !== undefined ? headArea.offsetHeight : 0;
       const middleHeight = window.scrollY + (window.innerHeight / 2) - headAreaHeight;
 
-      return Array.prototype.slice.call(hTags).reduce((pre, cur) => {
+      return [...hTags].reduce((pre, cur) => {
         if (middleHeight < pre.offsetTop && middleHeight < cur.offsetTop) {
           return pre;
         }
