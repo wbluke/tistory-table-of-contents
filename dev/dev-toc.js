@@ -1,3 +1,10 @@
+/*
+ * Tistory TOC (Table Of Contents)
+ * dev by wbluke (wbluke.com)
+ * last update 2020.04.12
+ * version 1.0.3
+ */
+
 const CLASS_OF_MAIN_CONTENTS = '.area_view';
 
 const CONSTANTS = (function () {
@@ -62,6 +69,9 @@ const TOC_CARD = (function () {
 
     const onscroll = function () {
       const tocTag = tocCardService.findCurrentHTag();
+      if (tocTag == undefined) {
+        return;
+      }
 
       tocCardService.markCurrentHTag(tocTag);
       tocCardService.scrollToMainTocTag(tocTag);
@@ -173,6 +183,10 @@ const TOC_CARD = (function () {
     }
 
     const findCurrentHTag = function () {
+      if (hTags.length == 0) {
+        return undefined;
+      }
+
       const currentHTag = findCurrentMainHTag();
       return findTocTagCorrespondingToHTag(currentHTag);
     }
