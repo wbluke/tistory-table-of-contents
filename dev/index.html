@@ -331,6 +331,7 @@ lightbox.options.albumLabel = "%1 / %2";
 <h1>테스트 h1 태그1</h1>
 <h2>자동 프록시 생성</h2>
 <h3>자동 프록시 생성 빈 후처리기</h3>
+<h4>자동 프록시 생성 빈 후처리기</h4>
 <p>투명한 부가기능을 적용하는 과정에서 발견됐던 거의 대부분의 문제는 제거했다. 타깃 코드는 깔끔하고, 부가기능은 한 번만 만들어 모든 타깃과 메소드에 재사용이 가능하고, 타깃의 적용 메소드를 선정하는 방식도 독립적으로 작성할 수 있도록 분리되어 있다.</p>
 <p>&nbsp;</p>
 <p>하지만 아직 한 가지 해결할 과제가 남아 있다. 프록시 팩토리 빈 방식의 접근 방법의 한계라고 생각했던 두 가지 문제가 있었다. 그중에서 부가기능이 타깃 오브젝트마다 새로 만들어지는 문제는 스프링 ProxyFactoryBean의 어드바이스를 통해 해결됐다. 남은 것은 부가기능의 적용이 필요한 타깃 오브젝트마다 거의 비슷한 내용의 ProxyFactoryBean 빈 설정정보를 추가해주는 부분이다. 새로운 타깃이 등장할 때마다 비슷한 설정을 매번 복사해주어야 한다. 이런 류의 중복은 어떻게 할까?</p>
@@ -344,6 +345,7 @@ lightbox.options.albumLabel = "%1 / %2";
 <h1>테스트 h1 태그2</h1>
 <h2>포인트컷</h2>
 <h3>확장된 포인트컷</h3>
+<h4>자동 프록시 생성 빈 후처리기</h4>
 <p>한 가지 이상한 점은 지금까지 포인트컷은 부가기능을 적용할 메소드를 판별하는 역할을 수행한다고 했는데, 위에서는 어떤 빈에 프록시를 적용할지를 선택한다고 했던 점이다. 사실 포인트컷은 클래스 필터와 메소드 매처 두 가지를 돌려주는 메소드를 갖고 있다.</p>
 <pre class="cs"><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">Pointcut</span> {
     <span class="hljs-function">ClassFilter <span class="hljs-title">getClassFilter</span>(<span class="hljs-params"></span>)</span>; <span class="hljs-comment">// 프록시를 적용할 클래스인지 확인해준다.</span>
@@ -352,6 +354,7 @@ lightbox.options.albumLabel = "%1 / %2";
 <p>지금까지는 포인트컷의 메소드 매처만을 사용해 메소드를 선별하는 작업만 해왔던 것이었다. 선정 기능을 모두 사용한다면 먼저 프록시를 적용할 클래스인지 판단하고 나서, 적용 대상 클래스일 경우 어드바이스를 적용할 메소드인지 확인하는 식으로 동작한다.</p>
 <hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style6">
 <h3>포인트컷 표현식</h3>
+<h4>자동 프록시 생성 빈 후처리기</h4>
 <p>좀 더 편리한 포인트컷 작성 방법을 알아보자.</p>
 <p>&nbsp;</p>
 <p><span style="color: #1b711d;"><b>※ 포인트컷 표현식</b></span></p>
@@ -375,6 +378,7 @@ execution(* *(..)) <span class="hljs-comment">// 모든 메소드 허용</span><
 <h1>테스트 h1 태그3</h1>
 <h2>AOP란 무엇인가?</h2>
 <h3>트랜잭션 적용 과정</h3>
+<h4>자동 프록시 생성 빈 후처리기</h4>
 <p>지금까지 UserService에 트랜잭션을 적용해온 과정을 정리해보자.</p>
 <p>&nbsp;</p>
 <p>트랜잭션 경계설정 코드를 비즈니스 로직을 담은 코드에 넣으면서 맞닥뜨린 첫 번째 문제는 <b>특정 트랜잭션 기술에 종속되는 코드가 돼버린다</b>는 것이었다. 그래서 트랜잭션 적용이라는 추상적인 작업 내용은 유지한 채로 구체적인 구현 방법을 자유롭게 바꿀 수 있도록 <code>서비스 추상화 기법을 적용</code>했다.</p>
@@ -436,6 +440,7 @@ execution(* *(..)) <span class="hljs-comment">// 모든 메소드 허용</span><
 <h1>테스트 h1 태그4</h1>
 <h2>트랜잭션 속성</h2>
 <h3>트랜잭션 전파</h3>
+<h4>자동 프록시 생성 빈 후처리기</h4>
 <p>스프링의 트랜잭션 추상화를 설명하면서 그냥 넘어간 부분이 있다. 트랜잭션 매니저에서 트랜잭션을 가져올 때 사용한 DefaultTransactionDefinition 오브젝트다.</p>
 <pre class="aspectj"><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(MethodInvocation invocation)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
     TransactionStatus status = <span class="hljs-keyword">this</span>.transactionManager.getTransaction(<span class="hljs-keyword">new</span> DefaultTransactionDefinition());

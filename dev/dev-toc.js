@@ -1,8 +1,8 @@
 /*
  * Tistory TOC (Table Of Contents)
  * dev by wbluke (wbluke.com)
- * last update 2020.04.12
- * version 0.1.3
+ * last update 2020.04.15
+ * version 0.1.4
  */
 
 const CLASS_OF_MAIN_CONTENTS = '.area_view';
@@ -11,31 +11,39 @@ const CONSTANTS = (function () {
   const KEY_OF_H1 = 1;
   const KEY_OF_H2 = 2;
   const KEY_OF_H3 = 3;
+  const KEY_OF_H4 = 4;
 
   const LEVEL_1 = 1;
   const LEVEL_2 = 2;
   const LEVEL_3 = 3;
+  const LEVEL_4 = 4;
 
   /* 최상위 태그에 따른 레벨 Map */
   const levelsByH1 = function () {
-    return new Map([[KEY_OF_H1, LEVEL_1], [KEY_OF_H2, LEVEL_2], [KEY_OF_H3, LEVEL_3]])
+    return new Map([[KEY_OF_H1, LEVEL_1], [KEY_OF_H2, LEVEL_2], [KEY_OF_H3, LEVEL_3], [KEY_OF_H4, LEVEL_4]])
   }
 
   const levelsByH2 = function () {
-    return new Map([[KEY_OF_H2, LEVEL_1], [KEY_OF_H3, LEVEL_2]])
+    return new Map([[KEY_OF_H2, LEVEL_1], [KEY_OF_H3, LEVEL_2], [KEY_OF_H4, LEVEL_3]])
   }
 
   const levelsByH3 = function () {
-    return new Map([[KEY_OF_H3, LEVEL_1]])
+    return new Map([[KEY_OF_H3, LEVEL_1], [KEY_OF_H4, LEVEL_2]])
+  }
+
+  const levelsByH4 = function () {
+    return new Map([[KEY_OF_H4, LEVEL_1]])
   }
 
   return {
     indexOfH1: KEY_OF_H1,
     indexOfH2: KEY_OF_H2,
     indexOfH3: KEY_OF_H3,
+    indexOfH4: KEY_OF_H4,
     levelsByH1: levelsByH1(),
     levelsByH2: levelsByH2(),
     levelsByH3: levelsByH3(),
+    levelsByH4: levelsByH4(),
   }
 })();
 
@@ -88,9 +96,15 @@ const TOC_CARD = (function () {
     const tocElementsCard = document.querySelector('#toc-elements');
 
     const mainContents = document.querySelector(CLASS_OF_MAIN_CONTENTS);
-    const hTags = mainContents.querySelectorAll('h1, h2, h3');
 
-    /* h1, h2, h3 태그가 있는지 확인한다 */
+    const hTags = (function () {
+      const foundHTags = mainContents.querySelectorAll('h1, h2, h3, h4');
+
+      /* 글 내용 밑에 있는 [...카테고리의 다른 글] h4 제거 */
+      return [...foundHTags].filter(hTag => !hTag.parentElement.classList.contains('another_category'));
+    })();
+
+    /* h1, h2, h3, h4 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
       if (mainContents === undefined) {
         return false;
@@ -105,7 +119,7 @@ const TOC_CARD = (function () {
 
     /** 최상위 태그에 따른 레벨 Map 받아오기
      * 
-     * h1 ~ h3 태그 중 가장 높은 태그를 찾아서 그에 맞게 Level을 설정한다.
+     * h1 ~ h4 태그 중 가장 높은 태그를 찾아서 그에 맞게 Level을 설정한다.
      * 예를 들어, h1 태그가 없고 h2, h3 태그만 있는 경우
      * h2가 가장 높은 태그이며, 해당 태그 h2에 LEVEL_1을 부여하고 그 다음 태그인 h3에는 LEVEL_2를 부여한다.
      * 
@@ -115,9 +129,10 @@ const TOC_CARD = (function () {
       const levelMapByHighestTag = {
         'H1': CONSTANTS.levelsByH1,
         'H2': CONSTANTS.levelsByH2,
+        'H3': CONSTANTS.levelsByH3,
       };
 
-      return levelMapByHighestTag[findHighestHTag().tagName] || CONSTANTS.levelsByH3;
+      return levelMapByHighestTag[findHighestHTag().tagName] || CONSTANTS.levelsByH4;
     }
 
     /* 최상위 태그 판별 작업 */
@@ -262,6 +277,10 @@ const TOC_CARD = (function () {
 
     const findLevelOfTocTag = function (tocTag) {
       const classes = tocTag.classList;
+      if (classes.contains('toc-level-4')) {
+        return 4;
+      }
+
       if (classes.contains('toc-level-3')) {
         return 3;
       }
