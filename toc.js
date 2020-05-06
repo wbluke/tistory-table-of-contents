@@ -1,8 +1,8 @@
 /*
  * Tistory TOC (Table Of Contents)
  * dev by wbluke (wbluke.com)
- * last update 2020.04.15
- * version 0.1.4
+ * last update 2020.05.06
+ * version 0.1.5
  */
 
 const CLASS_OF_MAIN_CONTENTS = '.area_view';
