@@ -77,13 +77,12 @@ const TOC_CARD = (function () {
 
     const onscroll = function () {
       const tocTag = tocCardService.findCurrentHTag();
-      if (tocTag == undefined) {
-        return;
-      }
 
-      tocCardService.markCurrentHTag(tocTag);
-      tocCardService.scrollToMainTocTag(tocTag);
-      tocCardService.detectTocCardPosition();
+      if (tocTag) {
+        tocCardService.markCurrentHTag(tocTag);
+        tocCardService.scrollToMainTocTag(tocTag);
+        tocCardService.detectTocCardPosition();
+      }
     }
 
     return {
@@ -208,7 +207,12 @@ const TOC_CARD = (function () {
 
     const findCurrentMainHTag = function () {
       const headArea = document.querySelector('.area_head');
-      const headAreaHeight = headArea !== undefined ? headArea.offsetHeight : 0;
+
+      let headAreaHeight = 0;
+      if (headArea) {
+        headAreaHeight = headArea.offsetHeight;
+      }
+
       const middleHeight = window.scrollY + (window.innerHeight / 2) - headAreaHeight;
 
       return [...hTags].reduce((pre, cur) => {
@@ -307,7 +311,12 @@ const TOC_CARD = (function () {
       const currentScrollTop = document.documentElement.scrollTop;
 
       const footer = document.querySelector('#mEtc');
-      const footerTop = footer !== undefined ? footer.offsetTop : Number.MAX_SAFE_INTEGER;
+
+      let footerTop = Number.MAX_SAFE_INTEGER;
+      if (footer) {
+        footerTop = footer.offsetTop;
+      }
+
       const elementsCardBottom = currentScrollTop + tocElementsCard.offsetHeight;
 
       tocElementsCard.classList.remove('toc-app-basic', 'toc-app-bottom');
