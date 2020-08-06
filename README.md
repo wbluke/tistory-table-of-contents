@@ -10,7 +10,7 @@
 
 ## 적용한 블로그 글 & TOC 구현기
 
-https://www.wbluke.com/21
+https://wbluke.tistory.com/21
 
 ## 적용 방법
 
