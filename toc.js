@@ -1,8 +1,8 @@
 /*
  * Tistory TOC (Table Of Contents)
- * dev by wbluke (wbluke.com)
- * last update 2020.05.06
- * version 0.1.5
+ * dev by wbluke (https://wbluke.tistory.com)
+ * last update 2020.08.09
+ * version 0.1.6
  */
 
 const CLASS_OF_MAIN_CONTENTS = '.area_view';
@@ -97,7 +97,7 @@ const TOC_CARD = (function () {
     const mainContents = document.querySelector(CLASS_OF_MAIN_CONTENTS);
 
     const hTags = (function () {
-      const foundHTags = mainContents.querySelectorAll('h1, h2, h3, h4');
+      const foundHTags = mainContents ? mainContents.querySelectorAll('h1, h2, h3, h4') : [];
 
       /* 글 내용 밑에 있는 [...카테고리의 다른 글] h4 제거 */
       return [...foundHTags].filter(hTag => !hTag.parentElement.classList.contains('another_category'));
@@ -105,10 +105,6 @@ const TOC_CARD = (function () {
 
     /* h1, h2, h3, h4 태그가 있는지 확인한다 */
     const checkExistenceOfHTags = function () {
-      if (mainContents === undefined) {
-        return false;
-      }
-
       return hTags.length !== 0;
     }
 
