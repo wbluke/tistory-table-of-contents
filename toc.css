@@ -69,3 +69,7 @@
         visibility: hidden;
     }
 }
+
+#wrap_toc{
+    padding-bottom: 1.3rem;
+}
