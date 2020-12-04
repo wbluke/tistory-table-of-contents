@@ -1,8 +1,8 @@
 /*
  * Tistory TOC (Table Of Contents)
  * dev by wbluke (https://wbluke.tistory.com)
- * last update 2020.08.09
- * version 0.1.6
+ * last update 2020.12.04
+ * version 0.1.7
  */
 
 const CLASS_OF_MAIN_CONTENTS = '.area_view';
@@ -157,6 +157,7 @@ const TOC_CARD = (function () {
 
     const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, hTag, indexOfHTag) {
       const basicItem = createBasicItemBy(hTag, indexOfHTag);
+      
       appendScrollEventsOn(basicItem, indexOfHTag);
 
       basicItem.classList.add(`toc-level-${level}`);
@@ -166,8 +167,20 @@ const TOC_CARD = (function () {
 
     const createBasicItemBy = function (hTag, indexOfHTag) {
       const basicItem = document.createElement('a');
+      let hTagInnerText = hTag.innerText;
 
-      basicItem.innerHTML += hTag.innerText;
+      /* H tag 내용에 부등호 괄호가 포함되어 있을 때, 이를 html 특수문자 코드로 변경 */
+      if (hTag.innerText.includes('<')) {
+        hTagInnerText = hTagInnerText.replace(/&lt;/g, '&amp;lt;');
+        hTagInnerText = hTagInnerText.replace(/</g, '&lt;');
+      }
+
+      if (hTag.innerText.includes('>')) {
+        hTagInnerText = hTagInnerText.replace(/&gt;/g, '&amp;gt;');
+        hTagInnerText = hTagInnerText.replace(/>/g, '&gt;');
+      }
+
+      basicItem.innerHTML += hTagInnerText;
       basicItem.id = `toc-${indexOfHTag}`;
       basicItem.classList = 'toc-common';
 
