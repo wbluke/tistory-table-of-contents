@@ -157,6 +157,7 @@ const TOC_CARD = (function () {
 
     const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, hTag, indexOfHTag) {
       const basicItem = createBasicItemBy(hTag, indexOfHTag);
+      
       appendScrollEventsOn(basicItem, indexOfHTag);
 
       basicItem.classList.add(`toc-level-${level}`);
@@ -166,19 +167,20 @@ const TOC_CARD = (function () {
 
     const createBasicItemBy = function (hTag, indexOfHTag) {
       const basicItem = document.createElement('a');
-      
-      /* hTag 내용에 부등호 괄호가 포함되어 있을 때, 이를 html 특수문자 코드로 변경 */
+      let hTagInnerText = hTag.innerText;
+
+      /* H tag 내용에 부등호 괄호가 포함되어 있을 때, 이를 html 특수문자 코드로 변경 */
       if (hTag.innerText.includes('<')) {
-        hTag.innerText = hTag.innerText.replace(/&lt;/g, '&amp;lt;');
-        hTag.innerText = hTag.innerText.replace(/</g, '&lt;');
-      }
-      
-      if (hTag.innerText.includes('>')) {
-        hTag.innerText = hTag.innerText.replace(/&gt;/g, '&amp;gt;');
-        hTag.innerText = hTag.innerText.replace(/>/g, '&gt;');
+        hTagInnerText = hTagInnerText.replace(/&lt;/g, '&amp;lt;');
+        hTagInnerText = hTagInnerText.replace(/</g, '&lt;');
       }
 
-      basicItem.innerHTML += hTag.innerText;
+      if (hTag.innerText.includes('>')) {
+        hTagInnerText = hTagInnerText.replace(/&gt;/g, '&amp;gt;');
+        hTagInnerText = hTagInnerText.replace(/>/g, '&gt;');
+      }
+
+      basicItem.innerHTML += hTagInnerText;
       basicItem.id = `toc-${indexOfHTag}`;
       basicItem.classList = 'toc-common';
 
