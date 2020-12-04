@@ -166,6 +166,17 @@ const TOC_CARD = (function () {
 
     const createBasicItemBy = function (hTag, indexOfHTag) {
       const basicItem = document.createElement('a');
+      
+      /* hTag 내용에 부등호 괄호가 포함되어 있을 때, 이를 html 특수문자 코드로 변경 */
+      if (hTag.innerText.includes('<')) {
+        hTag.innerText = hTag.innerText.replace(/&lt;/g, '&amp;lt;');
+        hTag.innerText = hTag.innerText.replace(/</g, '&lt;');
+      }
+      
+      if (hTag.innerText.includes('>')) {
+        hTag.innerText = hTag.innerText.replace(/&gt;/g, '&amp;gt;');
+        hTag.innerText = hTag.innerText.replace(/>/g, '&gt;');
+      }
 
       basicItem.innerHTML += hTag.innerText;
       basicItem.id = `toc-${indexOfHTag}`;
