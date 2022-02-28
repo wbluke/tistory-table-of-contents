@@ -1,8 +1,8 @@
 /*
  * Tistory TOC (Table Of Contents)
  * dev by wbluke (https://wbluke.tistory.com)
- * last update 2020.12.04
- * version 0.1.7
+ * last update 2022.02.28
+ * version 0.1.8
  */
 
 const CLASS_OF_MAIN_CONTENTS = '.area_view';
@@ -157,7 +157,7 @@ const TOC_CARD = (function () {
 
     const createTagItemByLevel = function (level = CONSTANTS.NUM_OF_H1, hTag, indexOfHTag) {
       const basicItem = createBasicItemBy(hTag, indexOfHTag);
-
+      
       appendScrollEventsOn(basicItem, indexOfHTag);
 
       basicItem.classList.add(`toc-level-${level}`);
