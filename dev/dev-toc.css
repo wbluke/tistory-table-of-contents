@@ -20,6 +20,7 @@
     width: 15.3rem;
     overflow-y: scroll;
     -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .items::-webkit-scrollbar {
