@@ -34,19 +34,19 @@
 }
 
 .toc-level-1 {
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin-top: 0.5rem;
     font-weight: bold;
 }
 
 .toc-level-2 {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     margin-top: 0.3rem;
     margin-left: 0.8rem;
 }
 
 .toc-level-3 {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     margin-top: 0.3rem;
     margin-left: 1.5rem;
 }
@@ -57,12 +57,25 @@
     margin-left: 2.2rem;
 }
 
-.toc-active, .toc-common:hover {
+.toc-level-5 {
+    font-size: 0.725rem;
+    margin-top: 0.3rem;
+    margin-left: 2.9rem;
+}
+
+.toc-level-6 {
+    font-size: 0.7rem;
+    margin-top: 0.3rem;
+    margin-left: 3.6rem;
+}
+
+.toc-active,
+.toc-common:hover {
     color: #008408;
 }
 
 .toc-parent-active {
-    color: #A1C7A0;
+    color: #a1c7a0;
 }
 
 @media (max-width: 83.75rem) {
